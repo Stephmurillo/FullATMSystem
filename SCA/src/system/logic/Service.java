@@ -20,12 +20,12 @@ public class Service {
     ClienteDAO cDao;
 
     // Service methods
-    public Cliente clienteGet(String cedula) throws Exception {
-        return cDao.read(cedula);
+    public Cliente clienteGet(String user) throws Exception {
+        return cDao.read(user);
     }
 
-    public List<Cliente> clienteSearch(String cedula) {
-        return cDao.findByCedula(cedula);
+    public List<Cliente> clienteSearch(String user) {
+        return cDao.findByCedula(user);
     }
 
     public List<Cliente> clienteAll() {
@@ -38,7 +38,7 @@ public class Service {
     
      public Cliente login(Cliente u) throws Exception{
         if(usuarios.contains(u)) return u;
-        else throw new Exception("Usuario no existe");
+        else throw new Exception("Usuario no existe.");
     }
 
      public String echo(Cliente u, String parameter) { //no es ncesario

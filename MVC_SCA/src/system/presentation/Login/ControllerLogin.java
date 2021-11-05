@@ -29,10 +29,7 @@ public class ControllerLogin {
 
     }
 
-    
     public void exit() {
-//        Service.instance().store();
+        //Service.instance().store();
     }
-
-    
 }
