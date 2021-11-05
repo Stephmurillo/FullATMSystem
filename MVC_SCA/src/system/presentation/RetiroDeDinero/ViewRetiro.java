@@ -1,0 +1,184 @@
+package system.presentation.RetiroDeDinero;
+
+import java.util.Observable;
+import javax.swing.ImageIcon;
+
+public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer {
+
+    public ViewRetiro() {
+        initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("atmIcon.png")).getImage());
+    }
+    
+    ControllerRetiro controller;
+    ModelRetiro model;
+    
+    public void setController(ControllerRetiro controller){
+        this.controller=controller;
+    }
+
+    public ControllerRetiro getController() {
+        return controller;
+    }
+    
+    public void setModel(ModelRetiro model){
+        this.model=model;
+         model.addObserver(this);
+    }
+
+    public ModelRetiro getModel() {
+        return model;
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        
+    }
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        saldo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        saldoCuenta = new javax.swing.JTextField();
+        montoRetiro = new javax.swing.JTextField();
+        resultado = new javax.swing.JTextField();
+        limpiar = new javax.swing.JButton();
+        aceptar = new javax.swing.JButton();
+        regresar = new javax.swing.JButton();
+
+        jLabel1.setText("jLabel1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Pantalla de Retiro de Dinero");
+
+        saldo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        saldo.setText("Saldo de cuenta");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Monto a Retirar");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Resultado de la transacción");
+
+        saldoCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saldoCuentaActionPerformed(evt);
+            }
+        });
+
+        montoRetiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montoRetiroActionPerformed(evt);
+            }
+        });
+
+        limpiar.setText("Limpiar");
+        limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarActionPerformed(evt);
+            }
+        });
+
+        aceptar.setText("Aceptar");
+
+        regresar.setText("Regresar");
+        regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regresarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(31, 31, 31))
+                            .addComponent(resultado, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(montoRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(saldoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(80, 80, 80))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(saldo)
+                        .addGap(143, 143, 143))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(limpiar)
+                        .addGap(49, 49, 49)
+                        .addComponent(aceptar)
+                        .addGap(49, 49, 49)
+                        .addComponent(regresar)
+                        .addGap(33, 33, 33))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(saldo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saldoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(montoRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(resultado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(limpiar)
+                    .addComponent(aceptar)
+                    .addComponent(regresar))
+                .addGap(19, 19, 19))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void montoRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoRetiroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_montoRetiroActionPerformed
+
+    private void saldoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saldoCuentaActionPerformed
+
+    private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
+        montoRetiro.setText("");
+        saldoCuenta.setText("");
+        resultado.setText("");
+    }//GEN-LAST:event_limpiarActionPerformed
+
+    private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
+        controller.hide();
+    }//GEN-LAST:event_regresarActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton limpiar;
+    private javax.swing.JTextField montoRetiro;
+    private javax.swing.JButton regresar;
+    private javax.swing.JTextField resultado;
+    private javax.swing.JLabel saldo;
+    private javax.swing.JTextField saldoCuenta;
+    // End of variables declaration//GEN-END:variables
+}
