@@ -15,16 +15,71 @@ public class ClienteDAO {
     }
 
     public void create(Cliente c) throws Exception{
-        String sql="insert into cliente (usuario, clave, saldo) "+
+        String sql="insert into Cliente (user, password, balance) "+
                 "values(?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, c.getUsuario());
         stm.setString(2, c.getClave());
         stm.setString(3, String.valueOf(c.getSaldoCuenta()));
-      
         int count=db.executeUpdate(stm);
         if (count==0){
             throw new Exception("Cliente ya existe.");
+        }
+    }
+    
+    public Cliente login(Cliente user) throws Exception{
+        String sql="select * from Cliente c where user=? and password=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, user.getUsuario());
+        stm.setString(1, user.getClave());
+        ResultSet rs =  db.executeQuery(stm);
+        if (rs.next()) {
+            Cliente c = from(rs, "c"); 
+            return c;
+        }
+        else{
+            throw new Exception ("Cliente no existe.");
+        }
+    }
+    
+    public double balance(String cedula) throws Exception{
+        String sql="select * from Cliente c where user=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, cedula);
+        ResultSet rs =  db.executeQuery(stm);
+        if (rs.next()) {
+            Cliente c = from(rs, "c"); 
+            return c.getSaldoCuenta();
+        }
+        else{
+            throw new Exception ("Cliente no existe.");
+        }
+    }
+    
+     public void retiro(String cedula, int monto) throws Exception{
+        String sql="update Cliente set balance=balance-?"+
+                "where user=? and balance>=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setInt(1, monto);
+        stm.setString(2, cedula);
+        stm.setInt(3, monto);
+        ResultSet rs =  db.executeQuery(stm);
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Saldo insuficiente.");
+        }
+    }
+     
+     public void cambioClave(String cedula, String nueva) throws Exception{
+        String sql="update Cliente set password=?"+
+                "where user=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, cedula);
+        stm.setString(2, nueva);
+        ResultSet rs =  db.executeQuery(stm);
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Saldo insuficiente.");
         }
     }
     
@@ -42,7 +97,7 @@ public class ClienteDAO {
         }
     }
     public void update(Cliente c) throws Exception{
-        String sql="update cliente set clave=?, saldo=? "+
+        String sql="update user set password=?, balance=? "+
                 "where usuario=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, c.getUsuario());
@@ -55,7 +110,7 @@ public class ClienteDAO {
     }
 
     public void delete(Cliente c) throws Exception{
-        String sql="delete from cliente where usuario=?";
+        String sql="delete from user where usuario=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, c.getUsuario());
         int count=db.executeUpdate(stm);
@@ -83,7 +138,7 @@ public class ClienteDAO {
     public List<Cliente> findByCedula(String cedula){
         List<Cliente> resultado = new ArrayList<>();
         try {
-            String sql="select * from cliente c "+
+            String sql="select * from user c "+
                     "where c.usuario like ?";            
             PreparedStatement stm = db.prepareStatement(sql);
             stm.setString(1, cedula+"%");
@@ -101,8 +156,8 @@ public class ClienteDAO {
         try {
             Cliente c= new Cliente();
             c.setUsuario(rs.getString(alias+".usuario"));
-            c.setClave(rs.getString(alias+".clave"));
-            c.setSaldoCuenta(Double.parseDouble(rs.getString(alias+".saldo")));
+            c.setClave(rs.getString(alias+".password"));
+            c.setSaldoCuenta(Double.parseDouble(rs.getString(alias+".balance")));
             return c;
         } catch (SQLException ex) {
             return null;
