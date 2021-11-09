@@ -1,6 +1,9 @@
 package system.presentation.Login;
 
+import java.awt.Color;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
@@ -112,25 +115,31 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-//       Cliente clien = new Cliente();
-//       clien = 
-        //ToDo: validar si los datos de ingreso son correctos
-       //asignar al cliente correspondiente
-        controller.menuShow();
+       try {
+            controller.login();
+            usuario.setText("");
+            clave.setText("");
+        } catch (Exception ex) {
+            usuario.setBackground(Color.PINK);
+            clave.setBackground(Color.PINK);
+        }
+       
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         usuario.setText("");
         clave.setText("");
-        //controller.exit();
+        usuario.setBackground(Color.WHITE);
+        clave.setBackground(Color.WHITE);
+       
     }//GEN-LAST:event_cancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
-    private javax.swing.JPasswordField clave;
+    public javax.swing.JPasswordField clave;
     private javax.swing.JButton ingresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField usuario;
+    public javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,7 +24,6 @@ public class Worker {
     private boolean condition=false;
     
     public void start(){
-        
         System.out.println("Worker "+ usuario.getUsuario()+ " atendiendo peticiones...");
         Runnable tarea = new Runnable(){
             public void run(){

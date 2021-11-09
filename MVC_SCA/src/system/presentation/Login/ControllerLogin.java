@@ -1,6 +1,9 @@
 package system.presentation.Login;
 
 import system.Aplicacion;
+import system.Cliente;
+import system.logic.Proxy;
+import system.logic.xmlPersister;
 
 public class ControllerLogin {
     ModelLogin model;
@@ -10,7 +13,7 @@ public class ControllerLogin {
        this.model = model;
         this.view = view;
         // invoke Model sets for initialization before linking to the view
-        // problably get the data from Service
+        // problably get the data from Proxy
         view.setModel(model);
         view.setController(this);
     }
@@ -31,5 +34,22 @@ public class ControllerLogin {
 
     public void exit() {
         //Service.instance().store();
+    }
+    
+     public void login() throws Exception{
+        Cliente u = new Cliente(view.usuario.getText(),new String(view.clave.getPassword()),0);
+        Cliente logged = Proxy.instance().login(u);
+        model.setCliente(logged);
+        
+        try{
+             if(logged != null){
+                 xmlPersister x = new xmlPersister(model.getCliente().getUsuario());
+                 model.setCliente(x.load());
+                 }
+        }catch(Exception e){
+            System.out.println("No se cargo");
+        }
+        
+        model.commit();
     }
 }
