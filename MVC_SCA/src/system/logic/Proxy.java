@@ -49,12 +49,19 @@ public class Proxy {
     }
     
      public Cliente clienteGet(String user) throws Exception {
-        Cliente clien = null;
-        //Que reciba un string
-        //Busque el usuario
-        //Y retorne al cliente
-        //Tiene que usar el clienteGet de la clase Service
-        return clien; 
+        out.writeInt(Protocol.GETUSER);
+        out.writeObject(user);
+        out.flush();
+        int status = in.readInt();
+        switch (status) {
+            case Protocol.STATUS_OK:
+                return (Cliente) in.readObject();
+            case Protocol.STATUS_ERROR:
+                logout();
+                throw new Exception("ERROR: El retiro no se realizó.");
+            default:
+                return null;
+        }
     }
 
     private void connect() throws Exception {

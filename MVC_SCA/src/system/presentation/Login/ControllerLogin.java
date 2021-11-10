@@ -14,8 +14,9 @@ package system.presentation.Login;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
-import system.Aplicacion;
+
 import sistema.logic.Cliente;
+import system.Aplicacion;
 import system.logic.Proxy;
 import system.logic.xmlPersister;
 
@@ -50,7 +51,7 @@ public class ControllerLogin {
         //Service.instance().store();
     }
 
-    public void login(String user, String password) throws Exception {
+    public Cliente login(String user, String password) throws Exception {
         Cliente aux = Proxy.instance().clienteGet(user);
         if (aux != null && password == aux.getClave()) {
             Cliente logged = (Cliente) Proxy.instance().login(aux);
@@ -63,10 +64,11 @@ public class ControllerLogin {
             } catch (Exception e) {
                 System.out.println("No se cargo.");
             }
+            model.commit();
+            return logged;
         }
         else{
-            System.out.println("Usuario no encontrado.");
+            return null;
         }
-        model.commit();
     }
 }

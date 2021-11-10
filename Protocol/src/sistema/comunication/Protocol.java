@@ -27,6 +27,7 @@ public class Protocol {
     public static final int CHANGE = 3; //Cambio de clave
     public static final int WITHDRAWAL = 4; //Retiro de dinero
     public static final int BALANCE = 5; //Consulta de saldo
+    public static final int GETUSER = 6;
     
     //Datos recibidos
     public static final int STATUS_ERROR = 0;

@@ -23,7 +23,7 @@ import sistema.comunication.Protocol;
 import system.logic.Cliente;
 
 public class Worker {
-    
+
     private boolean condition = false;
 
     Socket s;
@@ -62,40 +62,59 @@ public class Worker {
             switch (method) {
                 case Protocol.WITHDRAWAL:
                     try {
-                        parameter = (String) in.readObject();
-                    } catch (ClassNotFoundException ex) {}
-                    try {
-                        String result = Service.instance().retiro(parameter);
-                        out.writeInt(Protocol.STATUS_OK);
-                        out.writeObject(result);
-                    } catch (Exception ex) {
-                        out.writeInt(Protocol.STATUS_ERROR);
-                    }
+                    parameter = (String) in.readObject();
+                } catch (ClassNotFoundException ex) {
+                }
+                try {
+                    String result = Service.instance().retiro(parameter);
+                    out.writeInt(Protocol.STATUS_OK);
+                    out.writeObject(result);
+                } catch (Exception ex) {
+                    out.writeInt(Protocol.STATUS_ERROR);
+                }
                     break;
+               
                 case Protocol.CHANGE:
                     try {
-                        parameter = (String) in.readObject();
-                    } catch (ClassNotFoundException ex) {}
-                    try {
-                        String result = Service.instance().cambio(parameter);
-                        out.writeInt(Protocol.STATUS_OK);
-                        out.writeObject(result);
-                    } catch (Exception ex) {
-                        out.writeInt(Protocol.STATUS_ERROR);
-                    }
+                    parameter = (String) in.readObject();
+                } catch (ClassNotFoundException ex) {
+                }
+                try {
+                    String result = Service.instance().cambio(parameter);
+                    out.writeInt(Protocol.STATUS_OK);
+                    out.writeObject(result);
+                } catch (Exception ex) {
+                    out.writeInt(Protocol.STATUS_ERROR);
+                }
                     break;
+                
                 case Protocol.BALANCE:
                     try {
-                        parameter = (String) in.readObject();
-                    } catch (ClassNotFoundException ex) {}
-                    try {
-                        String result = Service.instance().consulta(parameter); //No sé si consulta deba llevar un usuario como parametro o no.
-                        out.writeInt(Protocol.STATUS_OK);
-                        out.writeObject(result);
-                    } catch (Exception ex) {
-                        out.writeInt(Protocol.STATUS_ERROR);
-                    }
+                    parameter = (String) in.readObject();
+                } catch (ClassNotFoundException ex) {
+                }
+                try {
+                    String result = Service.instance().consulta(parameter); //No sé si consulta deba llevar un usuario como parametro o no.
+                    out.writeInt(Protocol.STATUS_OK);
+                    out.writeObject(result);
+                } catch (Exception ex) {
+                    out.writeInt(Protocol.STATUS_ERROR);
+                }
                     break;
+                
+                case Protocol.GETUSER:
+                    try {
+                    parameter = (String) in.readObject();
+                } catch (ClassNotFoundException ex) {
+                }
+                try {
+                    String result = Service.instance().consulta(parameter);
+                    out.writeInt(Protocol.STATUS_OK);
+                    out.writeObject(result);
+                } catch (Exception ex) {
+                    out.writeInt(Protocol.STATUS_ERROR);
+                }
+                break;
                 case Protocol.LOGOUT:
                     s.close();
                     condition = false;
