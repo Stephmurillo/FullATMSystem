@@ -18,6 +18,7 @@ package system.presentation.Login;
 import java.awt.Color;
 import java.util.Observable;
 import javax.swing.ImageIcon;
+import sistema.logic.Cliente;
 
 public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
 
@@ -128,11 +129,14 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-       try {
-            controller.login(usuario.getText(), clave.getPassword().toString());
-            usuario.setText("");
-            clave.setText("");
-            controller.menuShow();
+        Cliente clien = new Cliente();
+        try {
+            clien = controller.login(usuario.getText(), clave.getPassword().toString());
+            if(clien != null){
+                usuario.setText("");
+                clave.setText("");
+                controller.menuShow();
+            }
         } catch (Exception ex) {
             usuario.setBackground(Color.PINK);
             clave.setBackground(Color.PINK);
