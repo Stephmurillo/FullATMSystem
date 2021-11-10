@@ -1,4 +1,6 @@
-package system;
+package sistema.comunication;
+
+import sistema.logic.Cliente;
 
 /*
 * (c) 2021
@@ -15,13 +17,9 @@ package system;
 * -----------------------------------------------
 */
 
-import java.io.IOException;
-import system.comunication.Server;
-
-public class Application {
-
-    public static void main(String[] args) throws IOException, Exception {
-        Server server = new Server();
-        server.run();
-    }
+public interface IService {
+    public Cliente login(Cliente u) throws Exception;
+    public void logout(Cliente u) throws Exception; 
+    public String retiro(String parametro);
+    public String cambio(String parametro);
 }

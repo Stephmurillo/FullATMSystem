@@ -1,35 +1,37 @@
 package system.logic;
 
+/*
+* (c) 2021
+* @author Yoselin Rojas, Cinthya Murillo
+* @version 1.0.0 2021-10-24
+*
+* -----------------------------------------------
+* EIF206 Programación III
+* 2do Ciclo 2021
+* II Proyecto
+*
+* 207700499 Rojas Fuentes, Yoselin - Grupo 04
+* 305260682 Murillo Hidalgo, Cinthya - Grupo 03
+* -----------------------------------------------
+ */
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.ModuleLayer.Controller;
-import system.Cliente;
+import sistema.logic.Cliente;
 import java.net.Socket;
 import sistema.comunication.Protocol;
-import sistema.logic.IService;
-
-// EJEMPLO DEL PROFE
-//        Socket socket = new Socket("127.0.0.1", 20000);
-//        BufferedReader is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-//        out.write("Hello Server\n");
-//        out.flush();
-//        String msg = is.readLine();
-//        System.out.println(msg);        
-//        out.cloute();
 
 public class Proxy {
-    
+
     // Singleton implementation
     private static Proxy theInstance;
-    
-    
-    
-    Socket socket;    
+
+    Socket socket;
     ObjectInputStream in;
     ObjectOutputStream out;
-    
+
     public static Proxy instance() throws IOException {
         if (theInstance == null) {
             theInstance = new Proxy();
@@ -37,129 +39,104 @@ public class Proxy {
         return theInstance;
     }
 
-      Controller controller;
+    Controller controller;
 
-    public Proxy() {           
+    public Proxy() {
     }
 
     public void setController(Controller controller) {
         this.controller = controller;
     }
-
-    private void connect() throws Exception{
-        try{
-        socket = new Socket(Protocol.SERVER,Protocol.PORT);
-        out = new ObjectOutputStream(socket.getOutputStream() );
-        in = new ObjectInputStream(socket.getInputStream());   } 
-        catch(IOException e){
-            System.out.println("Error en la comunicacion");
-            System.exit(-1);
-        }
+    
+     public Cliente clienteGet(String user) throws Exception {
+        Cliente clien = null;
+        //Que reciba un string
+        //Busque el usuario
+        //Y retorne al cliente
+        //Tiene que usar el clienteGet de la clase Service
+        return clien; 
     }
 
-    private void disconnect() throws Exception{
+    private void connect() throws Exception {
+        socket = new Socket(Protocol.SERVER, Protocol.PORT);
+        out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
+
+    }
+
+    private void logout() throws Exception {
         socket.shutdownOutput();
         socket.close();
     }
-    
-    public Cliente login(Cliente u) throws Exception{
-        connect();
-            out.writeInt(Protocol.LOGIN);
-            out.writeObject(u);
-            out.flush();
-            int response = in.readInt();
-            switch (response){
-                case Protocol.STATUS_OK:
-                    Cliente u1 =(Cliente) in.readObject();
-                    return u1;
-                
-                case Protocol.STATUS_ERROR:
-                    disconnect();
-                    throw new Exception("Error en la accion de Login");
-                
-                default: 
-                    return null;
-            }   
-    }
-    
-    public String retiro(String parametro) throws Exception{
-            out.writeInt(Protocol.LOGIN);
-            out.writeObject(parametro);
-            out.flush();
-            int response = in.readInt();
-            switch (response){
-                case Protocol.STATUS_OK:
-                     return (String) in.readObject();
-                 
-                case Protocol.STATUS_ERROR:
-                    disconnect();
-                    throw new Exception("Error en el intento de retiro");
-                
-                default: 
-                    return null;
-            }   
-    }
-    
-    
-     public void stop(){
-        continuar=false;
-    }
-     
-     public void logout(Cliente u) throws Exception{
-        out.writeInt(Protocol.LOGOUT);
+
+    public Cliente login(Cliente u) throws Exception {
+        try {
+            connect();
+        } catch (IOException e) {
+            System.out.println("Error en la comunicación.");
+            System.exit(-1);
+        }
+        out.writeInt(Protocol.LOGIN);
         out.writeObject(u);
         out.flush();
-        this.stop();
-        this.disconnect();
-    }
-    
-    
-   boolean continuar = true;    
-   public void start(){
-        Thread t = new Thread(new Runnable(){
-            public void run(){
-                listen();
-            }
-        });
-        continuar = true;
-        t.start();
-    } 
-
-   public void listen(){
-        int method;
-        while (continuar) {
-            try {
-                method = in.readInt();
-                switch(method){
-                case Protocol.RETIRO:
-                    try {
-                        String message=(String)in.readObject();
-                      
-                    } 
-                    catch (ClassNotFoundException ex) {}
-                    break;
-                    
-                case Protocol.CAMBIOC:
-                    try{
-                        String nombre=(String)in.readObject();
-                        
-                    }
-                    catch (ClassNotFoundException ex) {}
-                    break;
-                    
-                case Protocol.CONSULTA:
-                    try{
-                        String nombre=(String)in.readObject();
-                    }
-                    catch (ClassNotFoundException ex) {}
-                    break;
-                }
-                out.flush();
-            } catch (IOException  ex) {
-                continuar = false;
-            }                        
+        int status = in.readInt();
+        switch (status) {
+            case Protocol.STATUS_OK:
+                Cliente u1 = (Cliente) in.readObject();
+                return u1;
+            case Protocol.STATUS_ERROR:
+                logout();
+                throw new Exception("ERROR: No se realizó el login.");
+            default:
+                return null;
         }
     }
 
+    public String retiro(String parametro) throws Exception {
+        out.writeInt(Protocol.WITHDRAWAL);
+        out.writeObject(parametro);
+        out.flush();
+        int status = in.readInt();
+        switch (status) {
+            case Protocol.STATUS_OK:
+                return (String) in.readObject();
+            case Protocol.STATUS_ERROR:
+                logout();
+                throw new Exception("ERROR: El retiro no se realizó.");
+            default:
+                return null;
+        }
+    }
+
+    public String cambio(String parametro) throws Exception {
+        out.writeInt(Protocol.CHANGE);
+        out.writeObject(parametro);
+        out.flush();
+        int status = in.readInt();
+        switch (status) {
+            case Protocol.STATUS_OK:
+                return (String) in.readObject();
+            case Protocol.STATUS_ERROR:
+                logout();
+                throw new Exception("ERROR: La clave no fue cambiada.");
+            default:
+                return null;
+        }
+    }
+    
+    public String consulta(String parametro) throws Exception {
+        out.writeInt(Protocol.BALANCE);
+        out.writeObject(parametro);
+        out.flush();
+        int status = in.readInt();
+        switch (status) {
+            case Protocol.STATUS_OK:
+                return (String) in.readObject();
+            case Protocol.STATUS_ERROR:
+                logout();
+                throw new Exception("ERROR: No se puede consultar el saldo.");
+            default:
+                return null;
+        }
+    }
 }
-  
