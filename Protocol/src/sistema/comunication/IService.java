@@ -19,7 +19,7 @@ import sistema.logic.Cliente;
 
 public interface IService {
     public Cliente login(Cliente u) throws Exception;
-    public void logout(Cliente u) throws Exception; 
-    public String retiro(String parametro);
-    public String cambio(String parametro);
+    public void logout() throws Exception; 
+    public String withdrawal(String parametro) throws Exception;
+    public String change(String parametro) throws Exception;
 }

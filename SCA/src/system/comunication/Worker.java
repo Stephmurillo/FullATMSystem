@@ -20,7 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import sistema.comunication.Protocol;
-import system.logic.Cliente;
+import sistema.logic.Cliente;
 
 public class Worker {
 
@@ -53,7 +53,7 @@ public class Worker {
         hilo.start();
     }
 
-    public void HeyListen() {
+    public void HeyListen() { //operaciones especificas nada mas porque el cliente esta logueado
         int method;
         String parameter = "";
         try {
@@ -61,12 +61,9 @@ public class Worker {
             System.out.println("Operación: " + method + " (" + usuario.getUsuario() + ")");
             switch (method) {
                 case Protocol.WITHDRAWAL:
-                    try {
-                    parameter = (String) in.readObject();
-                } catch (ClassNotFoundException ex) {
-                }
+                   double monto = in.readDouble();
                 try {
-                    String result = Service.instance().retiro(parameter);
+                    String result = Service.instance().withdrawal(parameter);
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {
@@ -76,11 +73,11 @@ public class Worker {
                
                 case Protocol.CHANGE:
                     try {
-                    parameter = (String) in.readObject();
+                   String  password = (String) in.readObject();
                 } catch (ClassNotFoundException ex) {
                 }
                 try {
-                    String result = Service.instance().cambio(parameter);
+                    String result = Service.instance().change(parameter);
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {
@@ -89,32 +86,14 @@ public class Worker {
                     break;
                 
                 case Protocol.BALANCE:
-                    try {
-                    parameter = (String) in.readObject();
-                } catch (ClassNotFoundException ex) {
-                }
                 try {
-                    String result = Service.instance().consulta(parameter); //No sé si consulta deba llevar un usuario como parametro o no.
+                    String result = Service.instance().balance(usuario.getUsuario()); //No sé si consulta deba llevar un usuario como parametro o no.
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
                     break;
-                
-                case Protocol.GETUSER:
-                    try {
-                    parameter = (String) in.readObject();
-                } catch (ClassNotFoundException ex) {
-                }
-                try {
-                    String result = Service.instance().consulta(parameter);
-                    out.writeInt(Protocol.STATUS_OK);
-                    out.writeObject(result);
-                } catch (Exception ex) {
-                    out.writeInt(Protocol.STATUS_ERROR);
-                }
-                break;
                 case Protocol.LOGOUT:
                     s.close();
                     condition = false;

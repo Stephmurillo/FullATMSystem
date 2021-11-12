@@ -129,14 +129,10 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-        Cliente clien = new Cliente();
         try {
-            clien = controller.login(usuario.getText(), clave.getPassword().toString());
-            if(clien != null){
-                usuario.setText("");
-                clave.setText("");
-                controller.menuShow();
-            }
+            controller.login(usuario.getText(), String.valueOf(clave.getPassword()));
+            usuario.setText("");
+            clave.setText("");
         } catch (Exception ex) {
             usuario.setBackground(Color.PINK);
             clave.setBackground(Color.PINK);
