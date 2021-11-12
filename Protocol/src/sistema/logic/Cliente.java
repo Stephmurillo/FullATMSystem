@@ -1,5 +1,7 @@
 package sistema.logic;
 
+import java.io.Serializable;
+
 /*
 * (c) 2021
 * @author Yoselin Rojas, Cinthya Murillo
@@ -15,7 +17,7 @@ package sistema.logic;
 * -----------------------------------------------
 */
 
-public class Cliente {
+public class Cliente implements Serializable{
 
     public Cliente(String usuario, String clave, double saldoCuenta) {
         this.usuario = usuario;

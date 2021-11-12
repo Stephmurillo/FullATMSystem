@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import system.logic.Cliente;
+import sistema.logic.Cliente;
 
 public class ClienteDAO {
     DataBase db;
@@ -46,7 +46,7 @@ public class ClienteDAO {
         String sql="select * from Cliente c where user=? and password=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, user.getUsuario());
-        stm.setString(1, user.getClave());
+        stm.setString(2, user.getClave());
         ResultSet rs =  db.executeQuery(stm);
         if (rs.next()) {
             Cliente c = from(rs, "c"); 
@@ -170,7 +170,7 @@ public class ClienteDAO {
     public Cliente from(ResultSet rs, String alias){
         try {
             Cliente c= new Cliente();
-            c.setUsuario(rs.getString(alias+".usuario"));
+            c.setUsuario(rs.getString(alias+".user"));
             c.setClave(rs.getString(alias+".password"));
             c.setSaldoCuenta(Double.parseDouble(rs.getString(alias+".balance")));
             return c;

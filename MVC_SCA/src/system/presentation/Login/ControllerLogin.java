@@ -14,28 +14,25 @@ package system.presentation.Login;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import sistema.logic.Cliente;
 import system.Aplicacion;
 import system.logic.Proxy;
-import system.logic.xmlPersister;
 
 public class ControllerLogin {
 
+    ModelLogin model;
     ViewLogin view;
-    public ModelLogin model;
-    
-    Proxy localService;
 
-    public ControllerLogin(ModelLogin model, ViewLogin view) throws IOException {
-        this.view = view;
+    public ControllerLogin(ModelLogin model, ViewLogin view) {
         this.model = model;
+        this.view = view;
+        // invoke Model sets for initialization before linking to the view
+        // problably get the data from Proxy
+        view.setModel(model);
         view.setController(this);
-        localService = (Proxy) Proxy.instance();
-        localService.setController(view.getController());
-        view.setModel(model);  
     }
 
     public void show() {
@@ -55,39 +52,38 @@ public class ControllerLogin {
         //Service.instance().store();
     }
 
-    public void login(String usuario, String clave) throws Exception {
-        Cliente u = new Cliente(usuario, clave, 10000);
-        Cliente logged = Proxy.instance().login(u);
-        model.setCliente(logged);
-
-        try {
-            if (logged != null) {
-                xmlPersister x = new xmlPersister(model.getCliente().getUsuario());
-                model.setCliente(x.load());
+    public void login(String user, String password) throws Exception {
+            try {
+                Cliente aux = new Cliente (user, password, 0);
+                Cliente logged = (Cliente) Proxy.instance().login(aux);
+                model.setCliente(logged);
+                model.commit();
+                MSJSistema(1);
+                this.menuShow();
+            } catch (Exception e) {
+                MSJSistema(0);
             }
-        } catch (Exception e) {
-            System.out.println("No se cargo");
+    }
+    
+    public void logout() {
+        try {
+            Proxy.instance().logout();
+            
+        } catch (Exception ex) {
         }
-
+        model.setCliente(null);
         model.commit();
-        
-//        Cliente aux = Proxy.instance().clienteGet(user);
-//        try {
-//            if (aux != null && password.compareTo(aux.getClave()) == 0) {
-//                Cliente logged = (Cliente) Proxy.instance().login(aux);
-//                model.setCliente(logged);
-//                try {
-//                    if (logged != null) {
-//                        xmlPersister x = new xmlPersister(model.getCliente().getUsuario());
-//                        model.setCliente((Cliente) x.load());
-//                    }
-//                } catch (Exception e) {
-//                    System.out.println("No se cargo.");
-//                }
-//                model.commit();
-//                return logged;
-//            }
-//        } catch (Exception ex) {}
-//        return null;
+    }
+    
+    public void MSJSistema(int i){
+        JFrame frame = new JFrame("ERROR");
+        JFrame frame1 = new JFrame("CONFIRMACION");
+        if(i == 0){
+            JOptionPane.showMessageDialog(frame,"No coincide con la base de datos", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        else if(i == 1){
+            JOptionPane.showMessageDialog(frame1,"ACCESO CONCEBIDO"); 
+        }
     }
 }
