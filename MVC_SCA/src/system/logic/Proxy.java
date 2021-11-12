@@ -21,9 +21,10 @@ import java.io.ObjectOutputStream;
 import java.lang.ModuleLayer.Controller;
 import sistema.logic.Cliente;
 import java.net.Socket;
+import sistema.comunication.IService;
 import sistema.comunication.Protocol;
 
-public class Proxy {
+public class Proxy implements IService{
 
     // Singleton implementation
     private static Proxy theInstance;
@@ -51,14 +52,14 @@ public class Proxy {
      public Cliente clienteGet(String user) throws Exception {
         out.writeInt(Protocol.GETUSER);
         out.writeObject(user);
-        out.flush();
+        out.flush(); // se queda escuchando y pasa la server
         int status = in.readInt();
         switch (status) {
             case Protocol.STATUS_OK:
                 return (Cliente) in.readObject();
             case Protocol.STATUS_ERROR:
                 logout();
-                throw new Exception("ERROR: El retiro no se realizó.");
+                throw new Exception("ERROR: El withdrawal no se realizó.");
             default:
                 return null;
         }
@@ -71,7 +72,7 @@ public class Proxy {
 
     }
 
-    private void logout() throws Exception {
+    public void logout() throws Exception {
         socket.shutdownOutput();
         socket.close();
     }
@@ -84,13 +85,18 @@ public class Proxy {
             System.exit(-1);
         }
         out.writeInt(Protocol.LOGIN);
-        out.writeObject(u);
+        out.writeObject(u); 
         out.flush();
         int status = in.readInt();
         switch (status) {
             case Protocol.STATUS_OK:
                 Cliente u1 = (Cliente) in.readObject();
-                return u1;
+                if(u1 != null){
+                    return u1;
+                }
+                else{
+                     status = 2;
+                }
             case Protocol.STATUS_ERROR:
                 logout();
                 throw new Exception("ERROR: No se realizó el login.");
@@ -99,7 +105,7 @@ public class Proxy {
         }
     }
 
-    public String retiro(String parametro) throws Exception {
+    public String withdrawal(String parametro) throws Exception {
         out.writeInt(Protocol.WITHDRAWAL);
         out.writeObject(parametro);
         out.flush();
@@ -109,13 +115,13 @@ public class Proxy {
                 return (String) in.readObject();
             case Protocol.STATUS_ERROR:
                 logout();
-                throw new Exception("ERROR: El retiro no se realizó.");
+                throw new Exception("ERROR: El withdrawal no se realizó.");
             default:
                 return null;
         }
     }
 
-    public String cambio(String parametro) throws Exception {
+    public String change(String parametro) throws Exception {
         out.writeInt(Protocol.CHANGE);
         out.writeObject(parametro);
         out.flush();

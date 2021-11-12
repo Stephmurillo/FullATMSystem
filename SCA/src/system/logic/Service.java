@@ -17,8 +17,8 @@ package system.logic;
 
 import java.util.ArrayList;
 import java.util.List;
+import sistema.logic.Cliente;
 import system.data.ClienteDAO;
-import system.logic.Cliente;
 
 public class Service {
 
@@ -65,15 +65,15 @@ public class Service {
         return cDao.login(u);
     }
 
-    public String retiro(String parametro) throws Exception {
+    public String withdrawal(String parametro) throws Exception {
         return "No se ha implementado.";
     }
 
-    public String cambio(String parametro) throws Exception {
+    public String change(String parametro) throws Exception {
         return "No se ha implementado.";
     }
     
-    public String consulta(String parametro) throws Exception {
+    public String balance(String parametro) throws Exception {
         return "No se ha implementado.";
     }
     

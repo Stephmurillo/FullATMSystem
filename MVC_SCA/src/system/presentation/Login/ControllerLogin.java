@@ -15,10 +15,11 @@ package system.presentation.Login;
 * -----------------------------------------------
  */
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import sistema.logic.Cliente;
 import system.Aplicacion;
 import system.logic.Proxy;
-import system.logic.xmlPersister;
 
 public class ControllerLogin {
 
@@ -51,24 +52,38 @@ public class ControllerLogin {
         //Service.instance().store();
     }
 
-    public Cliente login(String user, String password) throws Exception {
-        Cliente aux = Proxy.instance().clienteGet(user);
-        if (aux != null && password == aux.getClave()) {
-            Cliente logged = (Cliente) Proxy.instance().login(aux);
-            model.setCliente(logged);
+    public void login(String user, String password) throws Exception {
             try {
-                if (logged != null) {
-                    xmlPersister x = new xmlPersister(model.getCliente().getUsuario());
-                    model.setCliente((Cliente) x.load());
-                }
+                Cliente aux = new Cliente (user, password, 0);
+                Cliente logged = (Cliente) Proxy.instance().login(aux);
+                model.setCliente(logged);
+                model.commit();
+                MSJSistema(1);
+                this.menuShow();
             } catch (Exception e) {
-                System.out.println("No se cargo.");
+                MSJSistema(0);
             }
-            model.commit();
-            return logged;
+    }
+    
+    public void logout() {
+        try {
+            Proxy.instance().logout();
+            
+        } catch (Exception ex) {
         }
-        else{
-            return null;
+        model.setCliente(null);
+        model.commit();
+    }
+    
+    public void MSJSistema(int i){
+        JFrame frame = new JFrame("ERROR");
+        JFrame frame1 = new JFrame("CONFIRMACION");
+        if(i == 0){
+            JOptionPane.showMessageDialog(frame,"No coincide con la base de datos", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        else if(i == 1){
+            JOptionPane.showMessageDialog(frame1,"ACCESO CONCEBIDO"); 
         }
     }
 }

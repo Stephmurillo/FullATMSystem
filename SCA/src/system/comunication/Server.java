@@ -22,7 +22,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import sistema.comunication.Protocol;
-import system.logic.Cliente;
+import sistema.logic.Cliente;
 
 public class Server {
 
