@@ -18,34 +18,34 @@ package system.logic;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.ModuleLayer.Controller;
 import sistema.logic.Cliente;
 import java.net.Socket;
 import sistema.comunication.Protocol;
+import system.presentation.Login.ControllerLogin;
 
 public class Proxy {
 
     // Singleton implementation
     private static Proxy theInstance;
-
+    ControllerLogin controller;
+    
     Socket socket;
     ObjectInputStream in;
     ObjectOutputStream out;
 
-    public static Proxy instance() throws IOException {
+    public static Proxy instance() {
         if (theInstance == null) {
             theInstance = new Proxy();
         }
         return theInstance;
     }
 
-    Controller controller;
-
-    public Proxy() {
-    }
-
-    public void setController(Controller controller) {
+    public void setController(ControllerLogin controller) {
         this.controller = controller;
+    }
+    
+    public ControllerLogin getController() {
+        return controller;
     }
     
      public Cliente clienteGet(String user) throws Exception {
@@ -54,13 +54,16 @@ public class Proxy {
         out.flush();
         int status = in.readInt();
         switch (status) {
-            case Protocol.STATUS_OK:
+            case Protocol.STATUS_OK -> {
                 return (Cliente) in.readObject();
-            case Protocol.STATUS_ERROR:
+            }
+            case Protocol.STATUS_ERROR -> {
                 logout();
                 throw new Exception("ERROR: El retiro no se realizó.");
-            default:
+            }
+            default -> {
                 return null;
+            }
         }
     }
 

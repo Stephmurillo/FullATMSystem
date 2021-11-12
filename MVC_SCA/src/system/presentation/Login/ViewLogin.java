@@ -13,14 +13,15 @@ package system.presentation.Login;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.Observable;
 import javax.swing.ImageIcon;
+import javax.swing.JPasswordField;
 import sistema.logic.Cliente;
 
-public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
+public class ViewLogin extends javax.swing.JFrame implements java.util.Observer {
 
     public ViewLogin() {
         initComponents();
@@ -29,29 +30,29 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
 
     ControllerLogin controller;
     ModelLogin model;
-    
-    public void setController(ControllerLogin controller){
-        this.controller=controller;
+
+    public void setController(ControllerLogin controller) {
+        this.controller = controller;
     }
 
     public ControllerLogin getController() {
         return controller;
     }
-    
-    public void setModel(ModelLogin model){
-        this.model=model;
-         model.addObserver(this);
+
+    public void setModel(ModelLogin model) {
+        this.model = model;
+        model.addObserver(this);
     }
 
     public ModelLogin getModel() {
         return model;
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,22 +91,22 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(96, 96, 96))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(83, 83, 83))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(clave, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(ingresar)
                             .addGap(42, 42, 42)
-                            .addComponent(cancelar))))
-                .addContainerGap(95, Short.MAX_VALUE))
+                            .addComponent(cancelar))
+                        .addComponent(clave))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(83, 83, 83)))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,9 +117,9 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
                 .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ingresar)
                     .addComponent(cancelar))
@@ -129,19 +130,16 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-        Cliente clien = new Cliente();
         try {
-            clien = controller.login(usuario.getText(), clave.getPassword().toString());
-            if(clien != null){
-                usuario.setText("");
-                clave.setText("");
-                controller.menuShow();
-            }
+            controller.login(usuario.getText(), new String(clave.getPassword()));
+            usuario.setBackground(Color.white);
+            clave.setBackground(Color.white);
+            usuario.setText("");
+            clave.setText("");
         } catch (Exception ex) {
-            usuario.setBackground(Color.PINK);
-            clave.setBackground(Color.PINK);
+            usuario.setBackground(Color.pink);
+            clave.setBackground(Color.pink);
         }
-       
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -149,12 +147,12 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
         clave.setText("");
         usuario.setBackground(Color.WHITE);
         clave.setBackground(Color.WHITE);
-       
-    }//GEN-LAST:event_cancelarActionPerformed
 
+    }//GEN-LAST:event_cancelarActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
-    public javax.swing.JPasswordField clave;
+    private javax.swing.JPasswordField clave;
     private javax.swing.JButton ingresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
