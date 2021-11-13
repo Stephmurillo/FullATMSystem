@@ -34,13 +34,14 @@ public class ControllerRetiro {
         view.setController(this);
     }
 
-    public void show() {
+    public void show(Cliente cliente) {
         this.view.setVisible(true);
+        model.setCliente(cliente);
     }
 
     public void hide() {
         this.view.setVisible(false);
-        Aplicacion.MENUES.show();
+        Aplicacion.MENUES.show(model.getCliente());
     }
 
     public void retiro(double monto) throws Exception {

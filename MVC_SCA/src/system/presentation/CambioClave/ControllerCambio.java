@@ -17,6 +17,7 @@ package system.presentation.CambioClave;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import sistema.logic.Cliente;
 import system.Aplicacion;
 
 public class ControllerCambio {
@@ -32,13 +33,13 @@ public class ControllerCambio {
         view.setController(this);
     }
     
-    public void show(){
+    public void show(Cliente cliente){
         this.view.setVisible(true);
     }
     
     public void hide(){
         this.view.setVisible(false);
-        Aplicacion.MENUES.show();
+        Aplicacion.MENUES.show(model.getCliente());
     }    
     // Controller methods that respond to View events
     // probably invoke methods from Service,

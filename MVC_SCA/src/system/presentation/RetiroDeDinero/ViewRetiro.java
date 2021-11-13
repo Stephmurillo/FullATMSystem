@@ -51,9 +51,9 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
     @Override
     public void update(Observable o, Object arg) {
-        cliente = modelLogin.getCliente();
-        model.setCliente(cliente);
-        saldoCuenta.setText(String.valueOf(model.getCliente().getSaldoCuenta()));
+//        cliente = modelLogin.getCliente();
+//        model.setCliente(cliente);
+//        saldoCuenta.setText(String.valueOf(model.getCliente().getSaldoCuenta()));
     }
 
     @SuppressWarnings("unchecked")
@@ -199,5 +199,4 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     private javax.swing.JLabel saldo;
     private javax.swing.JTextField saldoCuenta;
     // End of variables declaration//GEN-END:variables
-
 }
