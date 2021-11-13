@@ -20,6 +20,7 @@ import sistema.logic.Cliente;
 public interface IService {
     public Cliente login(Cliente u) throws Exception;
     public void logout() throws Exception; 
-    public String withdrawal(String parametro) throws Exception;
-    public String change(String parametro) throws Exception;
+    public void retiro(String user, Double monto) throws Exception;
+    public void cambioClave(String password, String nueva) throws Exception;
+    public double balance(String user) throws Exception;
 }
