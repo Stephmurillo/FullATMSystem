@@ -17,12 +17,15 @@ package system.presentation.Menu;
 
 import java.util.Observable;
 import java.util.Observer;
+import sistema.logic.Cliente;
 
 public class ModelMenu extends Observable{
     
     // Model attributes here
     // Model gets and sets here
-
+    
+    Cliente cliente;
+    
     @Override
     public synchronized void addObserver(Observer o) {
         super.addObserver(o); 
@@ -34,4 +37,7 @@ public class ModelMenu extends Observable{
         this.notifyObservers();
     }
     
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

@@ -16,6 +16,7 @@ package system.presentation.Menu;
 */
 
 import system.Aplicacion;
+import system.logic.Proxy;
 
 public class ControllerMenu {
     ModelMenu model;
@@ -37,9 +38,19 @@ public class ControllerMenu {
     }
     
     public void exit(){
-       // Service.instance().store();
+       System.exit(0);
     }
     
+    public void logout() {
+        try {
+            Proxy.instance().logout();
+            
+        } catch (Exception ex) {
+        }
+        model.setCliente(null);
+        model.commit();
+    }
+        
     // Controller methods that respond to View events
     // probably invoke methods from Service,
     // and set data to Model, which in turn causes the View to update 

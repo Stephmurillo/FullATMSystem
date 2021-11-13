@@ -120,6 +120,7 @@ public class ViewMenu extends javax.swing.JFrame implements java.util.Observer  
     }//GEN-LAST:event_irCambioCActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        controller.logout();
         controller.exit();
     }//GEN-LAST:event_salirActionPerformed
 

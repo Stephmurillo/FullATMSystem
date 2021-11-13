@@ -143,6 +143,7 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        controller.logout();
         controller.exit();
     }//GEN-LAST:event_cancelarActionPerformed
 
