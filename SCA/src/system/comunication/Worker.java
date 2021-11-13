@@ -63,23 +63,18 @@ public class Worker {
                 case Protocol.WITHDRAWAL:
                    double monto = in.readDouble();
                 try {
-                    String result = Service.instance().withdrawal(parameter);
+                    Service.instance().retiro(parameter, monto);
                     out.writeInt(Protocol.STATUS_OK);
-                    out.writeObject(result);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
                     break;
                
                 case Protocol.CHANGE:
-                    try {
-                   String  password = (String) in.readObject();
-                } catch (ClassNotFoundException ex) {
-                }
                 try {
-                    String result = Service.instance().change(parameter);
+                    String  password = (String) in.readObject();
+                    Service.instance().cambioClave(password, parameter);
                     out.writeInt(Protocol.STATUS_OK);
-                    out.writeObject(result);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
@@ -87,7 +82,7 @@ public class Worker {
                 
                 case Protocol.BALANCE:
                 try {
-                    String result = Service.instance().balance(usuario.getUsuario()); //No sé si consulta deba llevar un usuario como parametro o no.
+                    double result = Service.instance().balance(usuario.getUsuario());
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {

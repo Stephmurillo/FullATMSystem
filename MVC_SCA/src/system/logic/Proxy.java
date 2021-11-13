@@ -102,9 +102,10 @@ public class Proxy implements IService{
         }
     }
 
-    public String withdrawal(String parametro) throws Exception {
+    public String retiro(String user, Double monto) throws Exception {
         out.writeInt(Protocol.WITHDRAWAL);
-        out.writeObject(parametro);
+        out.writeObject(user);
+        out.writeObject(monto);
         out.flush();
         int status = in.readInt();
         switch (status) {
@@ -112,15 +113,16 @@ public class Proxy implements IService{
                 return (String) in.readObject();
             case Protocol.STATUS_ERROR:
                 logout();
-                throw new Exception("ERROR: El withdrawal no se realizó.");
+                throw new Exception("ERROR: El retiro no se realizó.");
             default:
                 return null;
         }
     }
 
-    public String change(String parametro) throws Exception {
+    public String cambioClave(String password, String nueva) throws Exception {
         out.writeInt(Protocol.CHANGE);
-        out.writeObject(parametro);
+        out.writeObject(password);
+        out.writeObject(nueva);
         out.flush();
         int status = in.readInt();
         switch (status) {
@@ -134,9 +136,9 @@ public class Proxy implements IService{
         }
     }
     
-    public String consulta(String parametro) throws Exception {
+    public String balance(String user) throws Exception {
         out.writeInt(Protocol.BALANCE);
-        out.writeObject(parametro);
+        out.writeObject(user);
         out.flush();
         int status = in.readInt();
         switch (status) {
@@ -148,5 +150,15 @@ public class Proxy implements IService{
             default:
                 return null;
         }
+    }
+
+    @Override
+    public String withdrawal(String parametro) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String change(String parametro) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -13,10 +13,12 @@ package system.presentation.RetiroDeDinero;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
+import java.awt.Color;
 import java.util.Observable;
 import javax.swing.ImageIcon;
+import sistema.logic.Cliente;
+import system.presentation.Login.ModelLogin;
 
 public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer {
 
@@ -24,31 +26,36 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("atmIcon.png")).getImage());
     }
-    
+
     ControllerRetiro controller;
     ModelRetiro model;
-    
-    public void setController(ControllerRetiro controller){
-        this.controller=controller;
+    ModelLogin modelLogin;
+    Cliente cliente;
+
+    public void setController(ControllerRetiro controller) {
+        this.controller = controller;
     }
 
     public ControllerRetiro getController() {
         return controller;
     }
-    
-    public void setModel(ModelRetiro model){
-        this.model=model;
-         model.addObserver(this);
+
+    public void setModel(ModelRetiro model) {
+        this.model = model;
+        model.addObserver(this);
     }
 
     public ModelRetiro getModel() {
         return model;
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
-        
+        cliente = modelLogin.getCliente();
+        model.setCliente(cliente);
+        saldoCuenta.setText(String.valueOf(model.getCliente().getSaldoCuenta()));
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -79,18 +86,6 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Resultado de la transacción");
 
-        saldoCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saldoCuentaActionPerformed(evt);
-            }
-        });
-
-        montoRetiro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                montoRetiroActionPerformed(evt);
-            }
-        });
-
         limpiar.setText("Limpiar");
         limpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +94,11 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         });
 
         aceptar.setText("Aceptar");
+        aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarActionPerformed(evt);
+            }
+        });
 
         regresar.setText("Regresar");
         regresar.addActionListener(new java.awt.event.ActionListener() {
@@ -166,14 +166,6 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void montoRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoRetiroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_montoRetiroActionPerformed
-
-    private void saldoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoCuentaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saldoCuentaActionPerformed
-
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
         montoRetiro.setText("");
         saldoCuenta.setText("");
@@ -184,6 +176,16 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         controller.hide();
     }//GEN-LAST:event_regresarActionPerformed
 
+    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
+        try {
+            controller.retiro(Double.valueOf(montoRetiro.getText()));
+            String result = String.valueOf(controller.balance());
+            resultado.setText(result);
+        } catch (Exception ex) {
+            saldoCuenta.setBackground(Color.PINK);
+            montoRetiro.setBackground(Color.PINK);
+        }
+    }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptar;
@@ -197,4 +199,5 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     private javax.swing.JLabel saldo;
     private javax.swing.JTextField saldoCuenta;
     // End of variables declaration//GEN-END:variables
+
 }

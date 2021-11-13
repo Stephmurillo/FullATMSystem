@@ -13,13 +13,12 @@ package system.presentation.Login;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
 import java.awt.Color;
 import java.util.Observable;
 import javax.swing.ImageIcon;
 
-public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
+public class ViewLogin extends javax.swing.JFrame implements java.util.Observer {
 
     public ViewLogin() {
         initComponents();
@@ -28,29 +27,29 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
 
     ControllerLogin controller;
     ModelLogin model;
-    
-    public void setController(ControllerLogin controller){
-        this.controller=controller;
+
+    public void setController(ControllerLogin controller) {
+        this.controller = controller;
     }
 
     public ControllerLogin getController() {
         return controller;
     }
-    
-    public void setModel(ModelLogin model){
-        this.model=model;
-         model.addObserver(this);
+
+    public void setModel(ModelLogin model) {
+        this.model = model;
+        model.addObserver(this);
     }
 
     public ModelLogin getModel() {
         return model;
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -139,7 +138,6 @@ public class ViewLogin extends javax.swing.JFrame implements java.util.Observer{
             usuario.setBackground(Color.PINK);
             clave.setBackground(Color.PINK);
         }
-       
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed

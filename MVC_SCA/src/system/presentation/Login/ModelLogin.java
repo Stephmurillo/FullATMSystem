@@ -20,11 +20,7 @@ import java.util.Observer;
 import sistema.logic.Cliente;
 
 public class ModelLogin extends Observable {
-    
-    // Model attributes here
-    
     Cliente cliente;
-
     
     public Cliente getCliente() {
         return cliente;

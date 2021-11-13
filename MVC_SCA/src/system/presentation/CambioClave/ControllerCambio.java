@@ -15,6 +15,8 @@ package system.presentation.CambioClave;
 * -----------------------------------------------
 */
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import system.Aplicacion;
 
 public class ControllerCambio {
@@ -42,5 +44,15 @@ public class ControllerCambio {
     // probably invoke methods from Service,
     // and set data to Model, which in turn causes the View to update 
     
-    
+        public void MSJSistema(int i){
+        JFrame frame = new JFrame("ERROR");
+        JFrame frame1 = new JFrame("CONFIRMACION");
+        if(i == 0){
+            JOptionPane.showMessageDialog(frame,"No se realizó el cambio de clave", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        else if(i == 1){
+            JOptionPane.showMessageDialog(frame1,"CLAVE CAMBIADA"); 
+        }
+    }
 }
