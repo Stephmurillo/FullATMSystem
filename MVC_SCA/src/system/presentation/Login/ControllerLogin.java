@@ -45,7 +45,7 @@ public class ControllerLogin {
 
     public void menuShow() {
         this.hide();
-        Aplicacion.MENUES.show();
+        Aplicacion.MENUES.show(model.getCliente());
     }
 
     public void exit() {
