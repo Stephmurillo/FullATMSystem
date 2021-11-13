@@ -37,6 +37,7 @@ public class ControllerRetiro {
     public void show(Cliente cliente) {
         this.view.setVisible(true);
         model.setCliente(cliente);
+        view.setSaldoCuenta(String.valueOf(model.getCliente().getSaldoCuenta()));
     }
 
     public void hide() {

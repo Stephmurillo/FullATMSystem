@@ -102,63 +102,53 @@ public class Proxy implements IService{
         }
     }
 
-    public String retiro(String user, Double monto) throws Exception {
+    public void retiro(String user, Double monto) throws Exception {
         out.writeInt(Protocol.WITHDRAWAL);
         out.writeObject(user);
-        out.writeObject(monto);
+        out.writeDouble(monto);
         out.flush();
-        int status = in.readInt();
-        switch (status) {
-            case Protocol.STATUS_OK:
-                return (String) in.readObject();
-            case Protocol.STATUS_ERROR:
-                logout();
-                throw new Exception("ERROR: El retiro no se realizó.");
-            default:
-                return null;
-        }
+//        int status = in.readInt();
+//        switch (status) {
+//            case Protocol.STATUS_OK:
+//                return (String) in.readObject();
+//            case Protocol.STATUS_ERROR:
+//                logout();
+//                throw new Exception("ERROR: El retiro no se realizó.");
+//            default:
+//                return null;
+//        }
     }
 
-    public String cambioClave(String password, String nueva) throws Exception {
+    public void cambioClave(String password, String nueva) throws Exception {
         out.writeInt(Protocol.CHANGE);
         out.writeObject(password);
         out.writeObject(nueva);
         out.flush();
-        int status = in.readInt();
-        switch (status) {
-            case Protocol.STATUS_OK:
-                return (String) in.readObject();
-            case Protocol.STATUS_ERROR:
-                logout();
-                throw new Exception("ERROR: La clave no fue cambiada.");
-            default:
-                return null;
-        }
+//        int status = in.readInt();
+//        switch (status) {
+//            case Protocol.STATUS_OK:
+//                return (String) in.readObject();
+//            case Protocol.STATUS_ERROR:
+//                logout();
+//                throw new Exception("ERROR: La clave no fue cambiada.");
+//            default:
+//                return null;
+//        }
     }
     
-    public String balance(String user) throws Exception {
+    public double balance(String user) throws Exception {
         out.writeInt(Protocol.BALANCE);
         out.writeObject(user);
         out.flush();
         int status = in.readInt();
         switch (status) {
             case Protocol.STATUS_OK:
-                return (String) in.readObject();
+                return (double) in.readObject();
             case Protocol.STATUS_ERROR:
                 logout();
                 throw new Exception("ERROR: No se puede consultar el saldo.");
             default:
-                return null;
+                return 0;
         }
-    }
-
-    @Override
-    public String withdrawal(String parametro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String change(String parametro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -17,8 +17,6 @@ package system.presentation.RetiroDeDinero;
 import java.awt.Color;
 import java.util.Observable;
 import javax.swing.ImageIcon;
-import sistema.logic.Cliente;
-import system.presentation.Login.ModelLogin;
 
 public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer {
 
@@ -29,8 +27,6 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
     ControllerRetiro controller;
     ModelRetiro model;
-    ModelLogin modelLogin;
-    Cliente cliente;
 
     public void setController(ControllerRetiro controller) {
         this.controller = controller;
@@ -48,13 +44,13 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     public ModelRetiro getModel() {
         return model;
     }
+    
+    public void setSaldoCuenta(String saldo){
+        saldoCuenta.setText(saldo);
+    }
 
     @Override
-    public void update(Observable o, Object arg) {
-//        cliente = modelLogin.getCliente();
-//        model.setCliente(cliente);
-//        saldoCuenta.setText(String.valueOf(model.getCliente().getSaldoCuenta()));
-    }
+    public void update(Observable o, Object arg) {}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -179,6 +175,7 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         try {
             controller.retiro(Double.valueOf(montoRetiro.getText()));
+            //System.out.println();
             String result = String.valueOf(controller.balance());
             resultado.setText(result);
         } catch (Exception ex) {
