@@ -63,7 +63,7 @@ public class Worker {
                 case Protocol.WITHDRAWAL:
                    double monto = in.readDouble();
                 try {
-                    Service.instance().retiro(parameter, monto);
+                    Service.instance().retiro(usuario.getUsuario(), monto);
                     out.writeInt(Protocol.STATUS_OK);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
