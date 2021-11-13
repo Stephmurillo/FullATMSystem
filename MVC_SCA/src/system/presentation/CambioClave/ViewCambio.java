@@ -66,6 +66,7 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cambio de Clave");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Clave Actual");

@@ -49,7 +49,7 @@ public class ControllerLogin {
     }
 
     public void exit() {
-        //Service.instance().store();
+        System.exit(0);
     }
 
     public void login(String user, String password) throws Exception {
@@ -83,7 +83,7 @@ public class ControllerLogin {
                     JOptionPane.ERROR_MESSAGE);
         }
         else if(i == 1){
-            JOptionPane.showMessageDialog(frame1,"ACCESO CONCEBIDO"); 
+            JOptionPane.showMessageDialog(frame1,"ACCESO CONCEDIDO"); 
         }
     }
 }

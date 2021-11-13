@@ -68,6 +68,7 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Pantalla de Retiro de Dinero");
+        setResizable(false);
 
         saldo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         saldo.setText("Saldo de cuenta");

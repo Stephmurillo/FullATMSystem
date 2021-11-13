@@ -41,10 +41,7 @@ public class Proxy implements IService{
     }
 
     Controller controller;
-
-    public Proxy() {
-    }
-
+    
     public void setController(Controller controller) {
         this.controller = controller;
     }

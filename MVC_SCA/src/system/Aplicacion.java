@@ -1,5 +1,7 @@
 package system;
 
+import java.io.IOException;
+
 /*
 * (c) 2021
 * @author Yoselin Rojas, Cinthya Murillo
@@ -17,7 +19,7 @@ package system;
 
 public class Aplicacion {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         system.presentation.CambioClave.ModelCambio modelCambio = new system.presentation.CambioClave.ModelCambio();
         system.presentation.CambioClave.ViewCambio viewCambio = new system.presentation.CambioClave.ViewCambio();

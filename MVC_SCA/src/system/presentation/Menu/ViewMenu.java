@@ -58,9 +58,10 @@ public class ViewMenu extends javax.swing.JFrame implements java.util.Observer  
         irCambioC = new javax.swing.JButton();
         salir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Pantalla Principal");
         setLocationByPlatform(true);
+        setResizable(false);
 
         irRetiro.setText("Realizar Retiro");
         irRetiro.addActionListener(new java.awt.event.ActionListener() {
