@@ -77,12 +77,6 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Confirme su clave");
 
-        confirmacionClave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmacionClaveActionPerformed(evt);
-            }
-        });
-
         limpiar.setText("Limpiar");
         limpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,10 +151,6 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void confirmacionClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmacionClaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_confirmacionClaveActionPerformed
 
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
         controller.hide();

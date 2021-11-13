@@ -13,11 +13,15 @@ package system.presentation.RetiroDeDinero;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import sistema.logic.Cliente;
 import system.Aplicacion;
+import system.logic.Proxy;
 
 public class ControllerRetiro {
+
     ModelRetiro model;
     ViewRetiro view;
 
@@ -29,13 +33,43 @@ public class ControllerRetiro {
         view.setModel(model);
         view.setController(this);
     }
-    
-    public void show(){
+
+    public void show() {
         this.view.setVisible(true);
     }
-    
-    public void hide(){
+
+    public void hide() {
         this.view.setVisible(false);
         Aplicacion.MENUES.show();
-    }    
+    }
+
+    public void retiro(double monto) throws Exception {
+        try {
+            Proxy.instance().retiro(model.getCliente().getUsuario(), monto);
+            model.commit();
+            MSJSistema(1);
+        } catch (Exception e) {
+            MSJSistema(0);
+        }
+    }
+    
+    public double balance() throws Exception {
+        double balance = 0;
+        try {
+            balance = Double.valueOf(Proxy.instance().balance(model.getCliente().getUsuario()));
+            model.commit();
+        } catch (Exception e) {}
+        return balance;
+    }
+
+    public void MSJSistema(int i) {
+        JFrame frame = new JFrame("ERROR");
+        JFrame frame1 = new JFrame("CONFIRMACION");
+        if (i == 0) {
+            JOptionPane.showMessageDialog(frame, "No se realizó el retiro", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        } else if (i == 1) {
+            JOptionPane.showMessageDialog(frame1, "RETIRO REALIZADO");
+        }
+    }
 }

@@ -13,8 +13,7 @@ package system.logic;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
 import java.util.ArrayList;
 import java.util.List;
 import sistema.logic.Cliente;
@@ -51,31 +50,30 @@ public class Service {
     public void clienteAdd(Cliente cliente) throws Exception {
         cDao.create(cliente);
     }
-     
+
     public Service() {
         try {
             usuarios = new ArrayList<>();
             cDao = new ClienteDAO();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
-    
-    private void logout() throws Exception {}
-        
+
     public Cliente login(Cliente u) throws Exception {
         return cDao.login(u);
     }
 
-    public String withdrawal(String parametro) throws Exception {
-        return "No se ha implementado.";
+    public double balance(String user) throws Exception {
+        return cDao.balance(user);
     }
 
-    public String change(String parametro) throws Exception {
-        return "No se ha implementado.";
+    public void retiro(String user, double monto) throws Exception {
+        cDao.retiro(user, monto);
     }
-    
-    public String balance(String parametro) throws Exception {
-        return "No se ha implementado.";
+
+    public void cambioClave(String password, String nueva) throws Exception {
+        cDao.cambioClave(password, nueva);
     }
-    
-     List<Cliente> usuarios;
+
+    List<Cliente> usuarios;
 }
