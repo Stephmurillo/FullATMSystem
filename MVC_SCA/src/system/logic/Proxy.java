@@ -45,22 +45,6 @@ public class Proxy implements IService{
     public void setController(Controller controller) {
         this.controller = controller;
     }
-    
-     public Cliente clienteGet(String user) throws Exception {
-        out.writeInt(Protocol.GETUSER);
-        out.writeObject(user);
-        out.flush(); // se queda escuchando y pasa la server
-        int status = in.readInt();
-        switch (status) {
-            case Protocol.STATUS_OK:
-                return (Cliente) in.readObject();
-            case Protocol.STATUS_ERROR:
-                logout();
-                throw new Exception("ERROR: El withdrawal no se realizó.");
-            default:
-                return null;
-        }
-    }
 
     private void connect() throws Exception {
         socket = new Socket(Protocol.SERVER, Protocol.PORT);
@@ -107,15 +91,15 @@ public class Proxy implements IService{
         out.writeObject(user);
         out.writeDouble(monto);
         out.flush();
-//        int status = in.readInt();
+//        int status = in.readInt(); //<--- Manda un cero, por eso no ejecuta el retiro.
 //        switch (status) {
 //            case Protocol.STATUS_OK:
-//                return (String) in.readObject();
+//                in.readObject();
+//                in.readDouble();
 //            case Protocol.STATUS_ERROR:
-//                logout();
 //                throw new Exception("ERROR: El retiro no se realizó.");
 //            default:
-//                return null;
+//                return;
 //        }
     }
 
@@ -124,16 +108,16 @@ public class Proxy implements IService{
         out.writeObject(password);
         out.writeObject(nueva);
         out.flush();
-//        int status = in.readInt();
-//        switch (status) {
-//            case Protocol.STATUS_OK:
-//                return (String) in.readObject();
-//            case Protocol.STATUS_ERROR:
-//                logout();
-//                throw new Exception("ERROR: La clave no fue cambiada.");
-//            default:
-//                return null;
-//        }
+        int status = in.readInt();
+        switch (status) {
+            case Protocol.STATUS_OK:
+                in.readObject();
+                in.readObject();
+            case Protocol.STATUS_ERROR:
+                throw new Exception("ERROR: La clave no fue cambiada.");
+            default:
+                return;
+        }
     }
     
     public double balance(String user) throws Exception {
@@ -145,7 +129,6 @@ public class Proxy implements IService{
             case Protocol.STATUS_OK:
                 return (double) in.readObject();
             case Protocol.STATUS_ERROR:
-                logout();
                 throw new Exception("ERROR: No se puede consultar el saldo.");
             default:
                 return 0;
