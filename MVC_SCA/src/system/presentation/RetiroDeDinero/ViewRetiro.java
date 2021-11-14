@@ -175,13 +175,9 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         try {
             controller.retiro(Double.valueOf(montoRetiro.getText()));
-            //System.out.println();
             String result = String.valueOf(controller.balance());
             resultado.setText(result);
-        } catch (Exception ex) {
-            saldoCuenta.setBackground(Color.PINK);
-            montoRetiro.setBackground(Color.PINK);
-        }
+        } catch (Exception ex) {}
     }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
