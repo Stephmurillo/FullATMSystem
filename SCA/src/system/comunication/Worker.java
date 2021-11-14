@@ -39,7 +39,7 @@ public class Worker {
     }
 
     public void start() {
-        System.out.println("Worker " + usuario.getUsuario() + " atendiendo peticiones...");
+        System.out.println("Worker " + usuario.getUsuario() + " Atendiendo peticiones...");
         Runnable tarea = new Runnable() {
             public void run() {
                 while (condition) {
@@ -53,42 +53,48 @@ public class Worker {
         hilo.start();
     }
 
-    public void HeyListen() { //operaciones especificas nada mas porque el cliente esta logueado
-        int method;
-        String parameter = "";
+    public void HeyListen() { //Operaciones especificas nada mas porque el cliente esta logueado
         try {
-            method = in.readInt();
+            int method = in.readInt();
             System.out.println("Operación: " + method + " (" + usuario.getUsuario() + ")");
             switch (method) {
                 case Protocol.WITHDRAWAL:
-                   double monto = in.readDouble();
                 try {
+                    usuario = (Cliente) in.readObject();
+                    double monto = in.readDouble();
+
                     Service.instance().retiro(usuario.getUsuario(), monto);
                     out.writeInt(Protocol.STATUS_OK);
+                    
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
-                    break;
-               
+                break;
+
                 case Protocol.CHANGE:
                 try {
-                    String  password = (String) in.readObject();
-                    Service.instance().cambioClave(password, parameter);
+                    String password = (String) in.readObject();
+                    String nueva = (String) in.readObject();
+
+                    Service.instance().cambioClave(password, nueva);
                     out.writeInt(Protocol.STATUS_OK);
+                    
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
-                    break;
-                
+                break;
+
                 case Protocol.BALANCE:
                 try {
                     double result = Service.instance().balance(usuario.getUsuario());
+
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
+
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
-                    break;
+                break;
                 case Protocol.LOGOUT:
                     s.close();
                     condition = false;
