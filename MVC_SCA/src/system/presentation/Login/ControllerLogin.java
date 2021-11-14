@@ -58,7 +58,6 @@ public class ControllerLogin {
                 Cliente logged = (Cliente) Proxy.instance().login(aux);
                 model.setCliente(logged);
                 model.commit();
-                MSJSistema(1);
                 this.menuShow();
             } catch (Exception e) {
                 MSJSistema(0);
