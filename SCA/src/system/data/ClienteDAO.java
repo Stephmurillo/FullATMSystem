@@ -121,12 +121,12 @@ public class ClienteDAO {
     }
 
     public void delete(Cliente c) throws Exception {
-        String sql = "delete from user where usuario=?";
+        String sql = "delete from Cliente where user=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, c.getUsuario());
         int count = db.executeUpdate(stm);
         if (count == 0) {
-            throw new Exception("Cliebte no existe.");
+            throw new Exception("Cliente no existe.");
         }
     }
 

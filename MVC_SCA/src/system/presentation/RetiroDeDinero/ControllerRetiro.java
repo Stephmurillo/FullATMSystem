@@ -54,14 +54,11 @@ public class ControllerRetiro {
             MSJSistema(0);
         }
     }
-    
+
     public double balance() throws Exception {
-        //double balance = 0;
-//        try {
-            double balance = Proxy.instance().balance(model.getCliente().getUsuario());
-            model.commit();
-            return balance;
-//        } catch (Exception e) {}
+        double balance = Proxy.instance().balance(model.getCliente().getUsuario());
+        model.commit();
+        return balance;
     }
 
     public void MSJSistema(int i) {
