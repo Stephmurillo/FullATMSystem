@@ -60,12 +60,9 @@ public class Worker {
             switch (method) {
                 case Protocol.WITHDRAWAL:
                 try {
-                    usuario = (Cliente) in.readObject();
                     double monto = in.readDouble();
-
                     Service.instance().retiro(usuario.getUsuario(), monto);
                     out.writeInt(Protocol.STATUS_OK);
-                    
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
@@ -73,12 +70,10 @@ public class Worker {
 
                 case Protocol.CHANGE:
                 try {
-                    String password = (String) in.readObject();
+                    String password = (String) usuario.getClave();
                     String nueva = (String) in.readObject();
-
                     Service.instance().cambioClave(password, nueva);
                     out.writeInt(Protocol.STATUS_OK);
-                    
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
@@ -87,10 +82,8 @@ public class Worker {
                 case Protocol.BALANCE:
                 try {
                     double result = Service.instance().balance(usuario.getUsuario());
-
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
-
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
                 }
