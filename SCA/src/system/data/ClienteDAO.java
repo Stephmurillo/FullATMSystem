@@ -30,7 +30,7 @@ public class ClienteDAO {
     }
 
     public void create(Cliente c) throws Exception {
-        String sql = "insert into Cliente (user, password, balance) "
+        String sql = "insert into Cliente (user, password, balance)"
                 + "values(?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, c.getUsuario());
@@ -95,7 +95,7 @@ public class ClienteDAO {
     }
 
     public Cliente read(String user) throws Exception {
-        String sql = "select * from Cliente c where usuario=?";
+        String sql = "select * from Cliente c where user=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, user);
         ResultSet rs = db.executeQuery(stm);
@@ -108,8 +108,8 @@ public class ClienteDAO {
     }
 
     public void update(Cliente c) throws Exception {
-        String sql = "update user set password=?, balance=? "
-                + "where usuario=?";
+        String sql = "update Cliente set password=?, balance=? "
+                + "where user=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, c.getUsuario());
         stm.setString(2, c.getClave());
@@ -149,8 +149,8 @@ public class ClienteDAO {
     public List<Cliente> findByCedula(String user) {
         List<Cliente> resultado = new ArrayList<>();
         try {
-            String sql = "select * from user c "
-                    + "where c.usuario like ?";
+            String sql = "select * from Cliente c "
+                    + "where c.user like ?";
             PreparedStatement stm = db.prepareStatement(sql);
             stm.setString(1, user + "%");
             ResultSet rs = db.executeQuery(stm);
