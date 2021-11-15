@@ -51,11 +51,6 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         saldoCuenta.setText(saldo);
     }
 
-    public String getBalance() throws Exception {
-        String balance = String.valueOf(controller.balance());
-        return balance;
-    }
-
     @Override
     public void update(Observable o, Object arg) {
     }
@@ -170,13 +165,11 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-        montoRetiro.setText("");
         try {
-            saldoCuenta.setText(this.getBalance());
-        } catch (Exception ex) {
-            //Logger.getLogger(ViewRetiro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        resultado.setText("");
+            saldoCuenta.setText(String.valueOf(controller.balance()));
+            montoRetiro.setText("");
+            resultado.setText("");
+        } catch (Exception ex) {}
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
@@ -186,9 +179,9 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         try {
             controller.retiro(Double.valueOf(montoRetiro.getText()));
+            controller.balance();
             resultado.setText(String.valueOf(controller.balance()));
-        } catch (Exception ex) {
-        }
+        } catch (Exception ex) {}
     }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
