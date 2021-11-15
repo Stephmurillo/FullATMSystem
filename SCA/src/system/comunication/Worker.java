@@ -81,7 +81,7 @@ public class Worker {
 
                 case Protocol.BALANCE:
                 try {
-                    double result = Service.instance().balance(usuario.getUsuario());
+                    double result = Service.instance().balance((String) in.readObject());
                     out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {
