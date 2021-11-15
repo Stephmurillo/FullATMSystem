@@ -47,7 +47,7 @@ public class ControllerRetiro {
 
     public void retiro(double monto) throws Exception {
         try {
-            Proxy.instance().retiro(model.getCliente().getUsuario(), monto);
+            Proxy.instance().retiro(monto);
             model.commit();
             MSJSistema(1);
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class ControllerRetiro {
     public double balance() throws Exception {
         double balance = 0;
         try {
-            balance = Double.valueOf(Proxy.instance().balance(model.getCliente().getUsuario()));
+            balance = Proxy.instance().balance(model.getCliente().getUsuario());
             model.commit();
         } catch (Exception e) {}
         return balance;

@@ -14,7 +14,6 @@ package system.logic;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,7 +23,7 @@ import java.net.Socket;
 import sistema.comunication.IService;
 import sistema.comunication.Protocol;
 
-public class Proxy implements IService{
+public class Proxy implements IService {
 
     // Singleton implementation
     private static Proxy theInstance;
@@ -41,7 +40,7 @@ public class Proxy implements IService{
     }
 
     Controller controller;
-    
+
     public void setController(Controller controller) {
         this.controller = controller;
     }
@@ -66,60 +65,48 @@ public class Proxy implements IService{
             System.exit(-1);
         }
         out.writeInt(Protocol.LOGIN);
-        out.writeObject(u); 
+        out.writeObject(u);
         out.flush();
         int status = in.readInt();
         switch (status) {
             case Protocol.STATUS_OK:
                 Cliente u1 = (Cliente) in.readObject();
-                if(u1 != null){
+                if (u1 != null) {
                     return u1;
-                }
-                else{
-                     status = 2;
+                } else {
+                    status = 2;
                 }
             case Protocol.STATUS_ERROR:
-                logout();
                 throw new Exception("ERROR: No se realizó el login.");
             default:
                 return null;
         }
     }
-
-    public void retiro(String user, Double monto) throws Exception {
+    
+    @Override
+    public void retiro(Double monto) throws Exception {
         out.writeInt(Protocol.WITHDRAWAL);
-        out.writeObject(user);
         out.writeDouble(monto);
         out.flush();
-//        int status = in.readInt(); //<--- Manda un cero, por eso no ejecuta el retiro.
+    }
+    
+    @Override
+    public void cambioClave(String nueva) throws Exception {
+        out.writeInt(Protocol.CHANGE);
+        out.writeObject(nueva);
+        out.flush();
+//        int status = in.readInt();
 //        switch (status) {
 //            case Protocol.STATUS_OK:
 //                in.readObject();
-//                in.readDouble();
 //            case Protocol.STATUS_ERROR:
-//                throw new Exception("ERROR: El retiro no se realizó.");
+//                throw new Exception("ERROR: La clave no fue cambiada.");
 //            default:
 //                return;
 //        }
     }
-
-    public void cambioClave(String password, String nueva) throws Exception {
-        out.writeInt(Protocol.CHANGE);
-        out.writeObject(password);
-        out.writeObject(nueva);
-        out.flush();
-        int status = in.readInt();
-        switch (status) {
-            case Protocol.STATUS_OK:
-                in.readObject();
-                in.readObject();
-            case Protocol.STATUS_ERROR:
-                throw new Exception("ERROR: La clave no fue cambiada.");
-            default:
-                return;
-        }
-    }
     
+    @Override
     public double balance(String user) throws Exception {
         out.writeInt(Protocol.BALANCE);
         out.writeObject(user);
