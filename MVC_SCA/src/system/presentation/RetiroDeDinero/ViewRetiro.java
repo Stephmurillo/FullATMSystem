@@ -16,6 +16,8 @@ package system.presentation.RetiroDeDinero;
  */
 import java.awt.Color;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer {
@@ -44,13 +46,19 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     public ModelRetiro getModel() {
         return model;
     }
-    
-    public void setSaldoCuenta(String saldo){
+
+    public void setSaldoCuenta(String saldo) {
         saldoCuenta.setText(saldo);
     }
 
+    public String getBalance() throws Exception {
+        String balance = String.valueOf(controller.balance());
+        return balance;
+    }
+
     @Override
-    public void update(Observable o, Object arg) {}
+    public void update(Observable o, Object arg) {
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -163,7 +171,11 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
         montoRetiro.setText("");
-        saldoCuenta.setText(String.valueOf(model.getCliente().getSaldoCuenta()));
+        try {
+            saldoCuenta.setText(this.getBalance());
+        } catch (Exception ex) {
+            //Logger.getLogger(ViewRetiro.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resultado.setText("");
     }//GEN-LAST:event_limpiarActionPerformed
 
@@ -175,7 +187,8 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         try {
             controller.retiro(Double.valueOf(montoRetiro.getText()));
             resultado.setText(String.valueOf(controller.balance()));
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
