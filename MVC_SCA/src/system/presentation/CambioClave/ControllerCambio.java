@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sistema.logic.Cliente;
 import system.Aplicacion;
+import system.logic.Proxy;
 
 public class ControllerCambio {
     ModelCambio model;
@@ -34,6 +35,7 @@ public class ControllerCambio {
     }
     
     public void show(Cliente cliente){
+        model.setCliente(cliente);
         this.view.setVisible(true);
     }
     
@@ -41,11 +43,18 @@ public class ControllerCambio {
         this.view.setVisible(false);
         Aplicacion.MENUES.show(model.getCliente());
     }    
-    // Controller methods that respond to View events
-    // probably invoke methods from Service,
-    // and set data to Model, which in turn causes the View to update 
     
-        public void MSJSistema(int i){
+     public void cambio(String pass) throws Exception {
+        try {
+            Proxy.instance().cambioClave(pass);
+            model.commit();
+            MSJSistema(1);
+        } catch (Exception e) {
+            MSJSistema(0);
+        }
+    }
+    
+    public void MSJSistema(int i){
         JFrame frame = new JFrame("ERROR");
         JFrame frame1 = new JFrame("CONFIRMACION");
         if(i == 0){
@@ -54,6 +63,7 @@ public class ControllerCambio {
         }
         else if(i == 1){
             JOptionPane.showMessageDialog(frame1,"CLAVE CAMBIADA"); 
-        }
+        } 
     }
+    
 }

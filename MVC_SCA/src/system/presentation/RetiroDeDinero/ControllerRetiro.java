@@ -49,26 +49,19 @@ public class ControllerRetiro {
         try {
             Proxy.instance().retiro(monto);
             model.commit();
-            MSJSistema(1);
         } catch (Exception e) {
-            MSJSistema(0);
         }
     }
 
     public double balance() throws Exception {
-        double balance = Proxy.instance().balance(model.getCliente().getUsuario());
-        model.commit();
-        return balance;
-    }
-
-    public void MSJSistema(int i) {
-        JFrame frame = new JFrame("ERROR");
-        JFrame frame1 = new JFrame("CONFIRMACION");
-        if (i == 0) {
-            JOptionPane.showMessageDialog(frame, "No se realizó el retiro", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-        } else if (i == 1) {
-            JOptionPane.showMessageDialog(frame1, "RETIRO REALIZADO");
+        try {
+            double balance = Proxy.instance().balance(model.getCliente().getUsuario());
+            model.commit();
+            return balance;
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+            return 0;
         }
     }
+
 }

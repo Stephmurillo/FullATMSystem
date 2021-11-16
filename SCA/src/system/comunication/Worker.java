@@ -70,9 +70,8 @@ public class Worker {
 
                 case Protocol.CHANGE:
                 try {
-                    String password = (String) usuario.getClave();
                     String nueva = (String) in.readObject();
-                    Service.instance().cambioClave(password, nueva);
+                    Service.instance().cambioClave(usuario.getUsuario(), nueva);
                     out.writeInt(Protocol.STATUS_OK);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);
@@ -82,7 +81,7 @@ public class Worker {
                 case Protocol.BALANCE:
                 try {
                     double result = Service.instance().balance((String) in.readObject());
-                    out.writeInt(Protocol.STATUS_OK);
+//                    out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);

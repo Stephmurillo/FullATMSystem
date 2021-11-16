@@ -121,10 +121,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="saldoCuenta">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="montoRetiro">
     </Component>
     <Component class="javax.swing.JTextField" name="resultado">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="limpiar">
       <Properties>
