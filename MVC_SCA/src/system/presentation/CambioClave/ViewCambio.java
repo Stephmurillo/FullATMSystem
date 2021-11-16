@@ -13,8 +13,7 @@ package system.presentation.CambioClave;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class ViewCambio extends javax.swing.JFrame implements java.util.Observer{
+public class ViewCambio extends javax.swing.JFrame implements java.util.Observer {
 
     public ViewCambio() {
         initComponents();
@@ -31,29 +30,29 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
 
     ControllerCambio controller;
     ModelCambio model;
-    
-    public void setController(ControllerCambio controller){
-        this.controller=controller;
+
+    public void setController(ControllerCambio controller) {
+        this.controller = controller;
     }
 
     public ControllerCambio getController() {
         return controller;
     }
-    
-    public void setModel(ModelCambio model){
-        this.model=model;
+
+    public void setModel(ModelCambio model) {
+        this.model = model;
         model.addObserver(this);
     }
 
     public ModelCambio getModel() {
         return model;
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -165,43 +164,66 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
         boolean capitalFlag = false;
         boolean lowerCaseFlag = false;
         boolean numberFlag = false;
-       try { 
-           if(model.getCliente().getClave().equals(claveActual.getText())){
-            if(nuevaClave.getText().equals(confirmacionClave.getText())){
-                String password = nuevaClave.getText();
-                if(password.length()>= 8){
-                    for (int i = 0; i < password.length(); i++) {
-                        ch = password.charAt(i);
-                        if (Character.isDigit(ch)) {
-                            numberFlag = true;
-                        } else if (Character.isUpperCase(ch)) {
-                            capitalFlag = true;
-                        } else if (Character.isLowerCase(ch)) {
-                            lowerCaseFlag = true;
+        try {
+            if (model.getCliente().getClave().compareTo(claveActual.getText()) == 0) {
+                if (nuevaClave.getText().compareTo(confirmacionClave.getText()) == 0) {
+                    String password = nuevaClave.getText();
+                    if (password.length() >= 8) {
+                        for (int i = 0; i < password.length(); i++) {
+                            ch = password.charAt(i);
+                            if (Character.isDigit(ch)) {
+                                numberFlag = true;
+                            } else if (Character.isUpperCase(ch)) {
+                                capitalFlag = true;
+                            } else if (Character.isLowerCase(ch)) {
+                                lowerCaseFlag = true;
+                            }
                         }
                         if (numberFlag && capitalFlag && lowerCaseFlag) {
-                                controller.cambio(password);
-                                this.cleanForm();
-                                break;
+                            controller.cambio(password);
+                            this.cleanForm();
+                            this.MSJSistemaCambioClave(0);
+                        } else {
+                            this.MSJSistemaCambioClave(1);
                         }
+                    } else {
+                        this.MSJSistemaCambioClave(1);
                     }
+                } else {
+                    this.MSJSistemaCambioClave(2);
                 }
+            } else {
+                this.MSJSistemaCambioClave(3);
             }
+        } catch (Exception ex) {
         }
-       } catch (Exception ex) {}
     }//GEN-LAST:event_AceptarActionPerformed
 
-    private void cleanForm(){
-       nuevaClave.setText("");
-       confirmacionClave.setText("");
-       claveActual.setText("");
+    private void cleanForm() {
+        nuevaClave.setText("");
+        confirmacionClave.setText("");
+        claveActual.setText("");
     }
-    
+
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-       nuevaClave.setText("");
-       confirmacionClave.setText("");
-       claveActual.setText("");
+        nuevaClave.setText("");
+        confirmacionClave.setText("");
+        claveActual.setText("");
     }//GEN-LAST:event_limpiarActionPerformed
+
+    public void MSJSistemaCambioClave(int i) {
+        JFrame frame = new JFrame("ERROR");
+        JFrame frame1 = new JFrame("CONFIRMACION");
+        if (i == 0) {
+            JOptionPane.showMessageDialog(frame1, "CLAVE MODIFICADA EXITOSAMENTE");
+        } else if (i == 1) {
+            JOptionPane.showMessageDialog(frame, "LA CLAVE NO ES SEGURA", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else if (i == 2) {
+            JOptionPane.showMessageDialog(frame, "LA CLAVE NUEVA NO COINCIDE", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else if (i == 3) {
+            JOptionPane.showMessageDialog(frame, "LA CLAVE ACTUAL NO COINCIDE", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;

@@ -15,8 +15,6 @@ package system.presentation.CambioClave;
 * -----------------------------------------------
 */
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import sistema.logic.Cliente;
 import system.Aplicacion;
 import system.logic.Proxy;
@@ -48,22 +46,6 @@ public class ControllerCambio {
         try {
             Proxy.instance().cambioClave(pass);
             model.commit();
-            MSJSistema(1);
-        } catch (Exception e) {
-            MSJSistema(0);
-        }
+        } catch (Exception e) {}
     }
-    
-    public void MSJSistema(int i){
-        JFrame frame = new JFrame("ERROR");
-        JFrame frame1 = new JFrame("CONFIRMACION");
-        if(i == 0){
-            JOptionPane.showMessageDialog(frame,"No se realizó el cambio de clave", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        else if(i == 1){
-            JOptionPane.showMessageDialog(frame1,"CLAVE CAMBIADA"); 
-        } 
-    }
-    
 }

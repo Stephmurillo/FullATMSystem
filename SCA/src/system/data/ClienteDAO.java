@@ -14,11 +14,14 @@ package system.data;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import sistema.logic.Cliente;
 
 public class ClienteDAO {
@@ -78,7 +81,9 @@ public class ClienteDAO {
         stm.setDouble(3, monto);
         int count = db.executeUpdate(stm);
         if (count == 0) {
-            throw new Exception("Saldo insuficiente.");
+            this.MSJSistemaRetiro(0);
+        } else {
+            this.MSJSistemaRetiro(1);
         }
     }
 
@@ -90,7 +95,7 @@ public class ClienteDAO {
         stm.setString(2, user);
         int count = db.executeUpdate(stm);
         if (count == 0) {
-            throw new Exception("Saldo insuficiente.");
+            throw new Exception("La clave no se cambió.");
         }
     }
 
@@ -173,6 +178,17 @@ public class ClienteDAO {
             return c;
         } catch (SQLException ex) {
             return null;
+        }
+    }
+
+    public void MSJSistemaRetiro(int i) {
+        JFrame frame = new JFrame("ERROR");
+        JFrame frame1 = new JFrame("CONFIRMACION");
+        if (i == 0) {
+            JOptionPane.showMessageDialog(frame, "DINERO INSUFICIENTE", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        } else if (i == 1) {
+            JOptionPane.showMessageDialog(frame1, "TRANSACCIÓN PROCESADA, RETIRE SU DINERO");
         }
     }
 }
