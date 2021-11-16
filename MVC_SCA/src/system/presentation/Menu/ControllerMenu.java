@@ -16,7 +16,7 @@ package system.presentation.Menu;
 */
 
 import sistema.logic.Cliente;
-import system.Aplicacion;
+import system.Application;
 import system.logic.Proxy;
 
 public class ControllerMenu {
@@ -59,11 +59,11 @@ public class ControllerMenu {
     
     public void retirosShow(){
         this.hide();
-        Aplicacion.RETIROS.show(model.getCliente());
+        Application.RETIROS.show(model.getCliente());
     }
     
     public void cambioClaveShow(){
         this.hide();
-        Aplicacion.CAMBIOCLAVE.show(model.getCliente());
+        Application.CAMBIOCLAVE.show(model.getCliente());
     }    
 }

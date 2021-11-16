@@ -13,13 +13,13 @@ package system.presentation.CambioClave;
 * 207700499 Rojas Fuentes, Yoselin - Grupo 04
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
-*/
-
+ */
 import sistema.logic.Cliente;
-import system.Aplicacion;
+import system.Application;
 import system.logic.Proxy;
 
 public class ControllerCambio {
+
     ModelCambio model;
     ViewCambio view;
 
@@ -31,21 +31,37 @@ public class ControllerCambio {
         view.setModel(model);
         view.setController(this);
     }
-    
-    public void show(Cliente cliente){
+
+    public void show(Cliente cliente) {
         model.setCliente(cliente);
         this.view.setVisible(true);
     }
-    
-    public void hide(){
+
+    public void hide() {
         this.view.setVisible(false);
-        Aplicacion.MENUES.show(model.getCliente());
-    }    
-    
-     public void cambio(String pass) throws Exception {
+        Application.MENUES.show(model.getCliente());
+    }
+
+    public void showLogin() {
+        this.view.setVisible(false);
+        this.logout();
+        Application.LOGIN.show();
+    }
+
+    public void logout() {
+        try {
+            Proxy.instance().logout();
+
+        } catch (Exception ex) {}
+        model.setCliente(null);
+        model.commit();
+    }
+
+    public void cambio(String pass) throws Exception {
         try {
             Proxy.instance().cambioClave(pass);
             model.commit();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 }
