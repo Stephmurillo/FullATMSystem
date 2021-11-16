@@ -14,6 +14,7 @@ package system.logic;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

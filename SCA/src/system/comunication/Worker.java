@@ -14,6 +14,7 @@ package system.comunication;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
+
 import system.logic.Service;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -81,7 +82,6 @@ public class Worker {
                 case Protocol.BALANCE:
                 try {
                     double result = Service.instance().balance((String) in.readObject());
-//                    out.writeInt(Protocol.STATUS_OK);
                     out.writeObject(result);
                 } catch (Exception ex) {
                     out.writeInt(Protocol.STATUS_ERROR);

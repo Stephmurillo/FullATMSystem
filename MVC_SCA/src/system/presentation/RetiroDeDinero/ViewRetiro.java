@@ -14,10 +14,7 @@ package system.presentation.RetiroDeDinero;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
-import java.awt.Color;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer {
@@ -51,10 +48,6 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         saldoCuenta.setText(saldo);
     }
 
-    public void setResultado(String saldo) {
-        resultado.setText(saldo);
-    }
-    
     @Override
     public void update(Observable o, Object arg) {
     }
@@ -66,10 +59,8 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         jLabel1 = new javax.swing.JLabel();
         saldo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         saldoCuenta = new javax.swing.JTextField();
         montoRetiro = new javax.swing.JTextField();
-        resultado = new javax.swing.JTextField();
         limpiar = new javax.swing.JButton();
         aceptar = new javax.swing.JButton();
         regresar = new javax.swing.JButton();
@@ -86,12 +77,7 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Monto a Retirar");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Resultado de la transacción");
-
         saldoCuenta.setEditable(false);
-
-        resultado.setEditable(false);
 
         limpiar.setText("Limpiar");
         limpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,9 +107,9 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(limpiar)
-                .addGap(37, 37, 37)
+                .addGap(43, 43, 43)
                 .addComponent(aceptar)
-                .addGap(46, 46, 46)
+                .addGap(39, 39, 39)
                 .addComponent(regresar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -133,40 +119,32 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
                         .addComponent(saldo)
                         .addGap(140, 140, 140))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(montoRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saldoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(resultado, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(saldoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(72, 72, 72))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(113, 113, 113))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(50, 50, 50)
                 .addComponent(saldo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saldoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(montoRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(resultado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(limpiar)
                     .addComponent(aceptar)
-                    .addComponent(regresar))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(regresar)
+                    .addComponent(limpiar))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -175,7 +153,6 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
         try {
             this.montoRetiro.setText("");
-            this.resultado.setText("");
         } catch (Exception ex) {}
     }//GEN-LAST:event_limpiarActionPerformed
 
@@ -185,23 +162,18 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         try {
-           controller.retiro(Double.valueOf(montoRetiro.getText()));
-           this.saldoCuenta.setText(String.valueOf(controller.balance()));
-           this.resultado.setText("Transacción procesada, retire su dinero.");
-        } catch (Exception ex) {
-            this.resultado.setText("Dinero insuficiente.");
-        }
+            controller.retiro(Double.valueOf(montoRetiro.getText()));
+            this.saldoCuenta.setText(String.valueOf(controller.balance()));
+        } catch (Exception ex) {}
     }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton limpiar;
     private javax.swing.JTextField montoRetiro;
     private javax.swing.JButton regresar;
-    private javax.swing.JTextField resultado;
     private javax.swing.JLabel saldo;
     private javax.swing.JTextField saldoCuenta;
     // End of variables declaration//GEN-END:variables

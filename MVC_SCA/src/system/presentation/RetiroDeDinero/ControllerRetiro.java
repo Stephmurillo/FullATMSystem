@@ -49,8 +49,7 @@ public class ControllerRetiro {
         try {
             Proxy.instance().retiro(monto);
             model.commit();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
     }
 
     public double balance() throws Exception {
@@ -63,5 +62,4 @@ public class ControllerRetiro {
             return 0;
         }
     }
-
 }
