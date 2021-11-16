@@ -71,8 +71,8 @@ public class Service {
         cDao.retiro(user, monto);
     }
 
-    public void cambioClave(String password, String nueva) throws Exception {
-        cDao.cambioClave(password, nueva);
+    public void cambioClave(String user, String nueva) throws Exception {
+        cDao.cambioClave(user, nueva);
     }
 
     List<Cliente> usuarios;

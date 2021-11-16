@@ -82,12 +82,12 @@ public class ClienteDAO {
         }
     }
 
-    public void cambioClave(String password, String nueva) throws Exception {
+    public void cambioClave(String user, String nueva) throws Exception {
         String sql = "update Cliente set password=?"
                 + "where user=?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, password);
-        stm.setString(2, nueva);
+        stm.setString(1, nueva);
+        stm.setString(2, user);
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Saldo insuficiente.");

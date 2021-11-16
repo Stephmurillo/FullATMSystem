@@ -49,7 +49,6 @@ public class Proxy implements IService {
         socket = new Socket(Protocol.SERVER, Protocol.PORT);
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
-
     }
 
     public void logout() throws Exception {
@@ -95,15 +94,6 @@ public class Proxy implements IService {
         out.writeInt(Protocol.CHANGE);
         out.writeObject(nueva);
         out.flush();
-//        int status = in.readInt();
-//        switch (status) {
-//            case Protocol.STATUS_OK:
-//                in.readObject();
-//            case Protocol.STATUS_ERROR:
-//                throw new Exception("ERROR: La clave no fue cambiada.");
-//            default:
-//                return;
-//        }
     }
     
     @Override

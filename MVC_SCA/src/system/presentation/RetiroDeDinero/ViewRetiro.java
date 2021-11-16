@@ -51,6 +51,10 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
         saldoCuenta.setText(saldo);
     }
 
+    public void setResultado(String saldo) {
+        resultado.setText(saldo);
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
     }
@@ -84,6 +88,10 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Resultado de la transacción");
+
+        saldoCuenta.setEditable(false);
+
+        resultado.setEditable(false);
 
         limpiar.setText("Limpiar");
         limpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -166,9 +174,8 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
         try {
-            saldoCuenta.setText(String.valueOf(controller.balance()));
-            montoRetiro.setText("");
-            resultado.setText("");
+            this.montoRetiro.setText("");
+            this.resultado.setText("");
         } catch (Exception ex) {}
     }//GEN-LAST:event_limpiarActionPerformed
 
@@ -178,10 +185,12 @@ public class ViewRetiro extends javax.swing.JFrame implements java.util.Observer
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         try {
-            controller.retiro(Double.valueOf(montoRetiro.getText()));
-            controller.balance();
-            resultado.setText(String.valueOf(controller.balance()));
-        } catch (Exception ex) {}
+           controller.retiro(Double.valueOf(montoRetiro.getText()));
+           this.saldoCuenta.setText(String.valueOf(controller.balance()));
+           this.resultado.setText("Transacción procesada, retire su dinero.");
+        } catch (Exception ex) {
+            this.resultado.setText("Dinero insuficiente.");
+        }
     }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

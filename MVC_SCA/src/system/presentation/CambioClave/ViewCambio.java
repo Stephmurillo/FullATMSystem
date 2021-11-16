@@ -16,7 +16,11 @@ package system.presentation.CambioClave;
 */
 
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class ViewCambio extends javax.swing.JFrame implements java.util.Observer{
 
@@ -157,9 +161,42 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
     }//GEN-LAST:event_regresarActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
-        // TODO add your handling code here:
+        char ch;
+        boolean capitalFlag = false;
+        boolean lowerCaseFlag = false;
+        boolean numberFlag = false;
+       try { 
+           if(model.getCliente().getClave().equals(claveActual.getText())){
+            if(nuevaClave.getText().equals(confirmacionClave.getText())){
+                String password = nuevaClave.getText();
+                if(password.length()>= 8){
+                    for (int i = 0; i < password.length(); i++) {
+                        ch = password.charAt(i);
+                        if (Character.isDigit(ch)) {
+                            numberFlag = true;
+                        } else if (Character.isUpperCase(ch)) {
+                            capitalFlag = true;
+                        } else if (Character.isLowerCase(ch)) {
+                            lowerCaseFlag = true;
+                        }
+                        if (numberFlag && capitalFlag && lowerCaseFlag) {
+                                controller.cambio(password);
+                                this.cleanForm();
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+       } catch (Exception ex) {}
     }//GEN-LAST:event_AceptarActionPerformed
 
+    private void cleanForm(){
+       nuevaClave.setText("");
+       confirmacionClave.setText("");
+       claveActual.setText("");
+    }
+    
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
        nuevaClave.setText("");
        confirmacionClave.setText("");
