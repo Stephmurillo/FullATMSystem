@@ -18,7 +18,7 @@ package system.presentation.Login;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sistema.logic.Cliente;
-import system.Aplicacion;
+import system.Application;
 import system.logic.Proxy;
 
 public class ControllerLogin {
@@ -45,7 +45,7 @@ public class ControllerLogin {
 
     public void menuShow() {
         this.hide();
-        Aplicacion.MENUES.show(model.getCliente());
+        Application.MENUES.show(model.getCliente());
     }
 
     public void exit() {
@@ -68,8 +68,7 @@ public class ControllerLogin {
         try {
             Proxy.instance().logout();
             
-        } catch (Exception ex) {
-        }
+        } catch (Exception ex) {}
         model.setCliente(null);
         model.commit();
     }

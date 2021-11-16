@@ -14,10 +14,9 @@ package system.presentation.RetiroDeDinero;
 * 305260682 Murillo Hidalgo, Cinthya - Grupo 03
 * -----------------------------------------------
  */
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 import sistema.logic.Cliente;
-import system.Aplicacion;
+import system.Application;
 import system.logic.Proxy;
 
 public class ControllerRetiro {
@@ -42,7 +41,7 @@ public class ControllerRetiro {
 
     public void hide() {
         this.view.setVisible(false);
-        Aplicacion.MENUES.show(model.getCliente());
+        Application.MENUES.show(model.getCliente());
     }
 
     public void retiro(double monto) throws Exception {

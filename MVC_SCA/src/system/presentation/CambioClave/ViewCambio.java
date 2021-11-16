@@ -15,8 +15,6 @@ package system.presentation.CambioClave;
 * -----------------------------------------------
  */
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -60,12 +58,12 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        claveActual = new javax.swing.JTextField();
-        nuevaClave = new javax.swing.JTextField();
-        confirmacionClave = new javax.swing.JTextField();
         limpiar = new javax.swing.JButton();
         Aceptar = new javax.swing.JButton();
         regresar = new javax.swing.JButton();
+        claveActual = new javax.swing.JPasswordField();
+        nuevaClave = new javax.swing.JPasswordField();
+        confirmacionClave = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cambio de Clave");
@@ -108,43 +106,38 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(limpiar))
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(claveActual)
-                                .addComponent(confirmacionClave)
-                                .addComponent(nuevaClave, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(regresar)))))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(limpiar)
+                    .addComponent(jLabel2))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(regresar))
+                    .addComponent(claveActual)
+                    .addComponent(nuevaClave)
+                    .addComponent(confirmacionClave))
                 .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(claveActual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
+                .addGap(53, 53, 53)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(claveActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nuevaClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(confirmacionClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(limpiar)
                     .addComponent(regresar)
@@ -165,9 +158,10 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
         boolean lowerCaseFlag = false;
         boolean numberFlag = false;
         try {
-            if (model.getCliente().getClave().compareTo(claveActual.getText()) == 0) {
-                if (nuevaClave.getText().compareTo(confirmacionClave.getText()) == 0) {
-                    String password = nuevaClave.getText();
+            
+            if (model.getCliente().getClave().compareTo(String.valueOf(claveActual.getPassword())) == 0) {
+                if (String.valueOf(nuevaClave.getPassword()).compareTo(String.valueOf(confirmacionClave.getPassword())) == 0) {
+                    String password = String.valueOf(nuevaClave.getPassword());
                     if (password.length() >= 8) {
                         for (int i = 0; i < password.length(); i++) {
                             ch = password.charAt(i);
@@ -183,6 +177,7 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
                             controller.cambio(password);
                             this.cleanForm();
                             this.MSJSistemaCambioClave(0);
+                            controller.showLogin();
                         } else {
                             this.MSJSistemaCambioClave(1);
                         }
@@ -195,8 +190,7 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
             } else {
                 this.MSJSistemaCambioClave(3);
             }
-        } catch (Exception ex) {
-        }
+        } catch (Exception ex) {}
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void cleanForm() {
@@ -227,13 +221,13 @@ public class ViewCambio extends javax.swing.JFrame implements java.util.Observer
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
-    private javax.swing.JTextField claveActual;
-    private javax.swing.JTextField confirmacionClave;
+    private javax.swing.JPasswordField claveActual;
+    private javax.swing.JPasswordField confirmacionClave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton limpiar;
-    private javax.swing.JTextField nuevaClave;
+    private javax.swing.JPasswordField nuevaClave;
     private javax.swing.JButton regresar;
     // End of variables declaration//GEN-END:variables
 }
